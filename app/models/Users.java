@@ -13,7 +13,7 @@ import javax.persistence.Column;
 import javax.validation.Constraint;
 
 /**
- * Created by rebec on 11/17/2015.
+ * Created by rebeca on 11/17/2015.
  */
 @Table(name="Users")
 @Entity
@@ -33,7 +33,7 @@ public class Users extends Model{
         return BCrypt.checkpw(password, this.password_hash);
     }
 
-    public static Users createNewUser(String username, String password) {
+    public static Users createNewUser(String username, String password, String fName) {
         if(password == null || username == null || password.length() < 8) {
             return null;
         }
@@ -44,6 +44,7 @@ public class Users extends Model{
         Users User = new Users();
         User.username = username;
         User.password_hash = passwordHash;
+        User.Fname= fName;
 
         return User;
     }

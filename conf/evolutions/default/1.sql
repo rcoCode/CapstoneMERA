@@ -3,13 +3,14 @@
 
 # --- !Ups
 
-create table Medication (
+create table meds (
   id                        bigserial not null,
   name                      varchar(255),
+  dose                      bigint,
   per_wk                    bigint,
   per_mnth                  bigint,
   per_day                   bigint,
-  constraint pk_Medication primary key (id))
+  constraint pk_meds primary key (id))
 ;
 
 create table Users (
@@ -27,7 +28,7 @@ create table Users (
 
 # --- !Downs
 
-drop table if exists Medication cascade;
+drop table if exists meds cascade;
 
 drop table if exists Users cascade;
 

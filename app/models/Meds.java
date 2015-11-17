@@ -1,21 +1,25 @@
 package models;
 
 import com.avaje.ebean.Model;
+import play.data.validation.Constraints;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Created by rebec on 11/17/2015.
+ * Created by rebeca on 11/17/2015.
  */
-@Table(name="Meds")
 @Entity
-public class Meds {
+public class Meds extends Model{
     @Id
     public Long id;
 
     public String name;
+
+    public static Finder<Long, Meds> find=new Finder<Long, Meds>(Meds.class);
+
+    public Long dose;
 
     public Long perWk;
 
@@ -23,18 +27,19 @@ public class Meds {
 
     public Long perDay;
 
-    public static Model.Finder<Long, Meds> find = new Model.Finder<Long, Meds>(Meds.class);
-
-    public static Meds createNewMed(String medName,Long week,Long month,Long day) {
-        if(medName == null || (week == null && month == null && day == null)) {
+    public static Meds createNewMed(String medName,Long dosage,Long week,Long month,Long day) {
+        if(medName == null || dosage==null || (week == null && month == null && day == null)) {
             return null;
         }
 
         Meds med = new Meds();
         med.name =medName;
+        med.dose =dosage;
         med.perWk =week;
         med.perMnth =month;
         med.perDay =day;
+
+        med.save();
 
         return med;
     }

@@ -1,15 +1,16 @@
 package controllers;
 
-import play.mvc.Result;
-
+import play.data.Form;
+import play.mvc.*;
+import views.html.*;
 import java.util.List;
 
 /**
- * Created by rebec on 11/17/2015.
+ * Created by rebeca on 11/17/2015.
  */
-public class Meds {
+public class Meds extends Controller{
     public Result index(){
-        List<Meds> meds=Meds.find.all();
-        return ok(views.html.Medication.index.render());
+        return ok(views.html.Meds.index.render("Medications"));
     }
+
 }

@@ -37,8 +37,9 @@ public class Application extends Controller {
         DynamicForm userForm = form().bindFromRequest();
         String username = userForm.data().get("username");
         String password = userForm.data().get("password");
+        String fName = userForm.data().get("fName");
 
-        Users nUser = Users.createNewUser(username, password);
+        Users nUser = Users.createNewUser(username, password, fName);
 
         if(nUser == null) {
             flash("error", "Invalid user");
@@ -49,7 +50,7 @@ public class Application extends Controller {
 
         flash("success", "Welcome new user " + nUser.username);
         session("user_id", nUser.id.toString());
-        return redirect(routes.Application.index());
+        return redirect(routes.Users.index());
     }
 
     public Result logout() {

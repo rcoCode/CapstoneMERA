@@ -1,5 +1,38 @@
 @(users: String)
 
 @main("Profile") {
+<h1>New Medication</h1>
+<form action="@routes.Users.createMed()" method="post">
+    <div class="col-md-4">
+        <label for="med_name">Name</label>
+        <input type="text" name="med_name" class="form-control input-lg">
+        <br>
+    </div>
 
+    <div class="col-md-4">
+        <label for="dosage">Dose</label>
+        <input type="text" name="dosage" class="form-control input-lg">
+        <br>
+    </div>
+
+    <div class="col-md-4">
+        <label for="day">Doses per day</label>
+        <input type="text" name="day" class="form-control input-lg">
+        <br>
+    </div>
+
+    <div class="col-md-4">
+        <label for="week">Days per week medication needed</label>
+        <input type="text" name="week" class="form-control input-lg">
+        <br>
+    </div>
+
+    <div class="col-md-4">
+        <label for="month">Weeks per Month needed</label>
+        <input type="text" name="month" class="form-control input-lg">
+        <br>
+    </div>
+
+    <button class="btn btn-default btn-lg">Submit</button>
+</form>
 }
