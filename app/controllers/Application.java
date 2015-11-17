@@ -28,6 +28,7 @@ public class Application extends Controller {
             flash("success", "Welcome back " + users.username);
         } else {
             flash("error", "Invalid login. Check your username and password.");
+            return redirect(routes.Application.index());
         }
 
         return redirect(routes.Users.index());
