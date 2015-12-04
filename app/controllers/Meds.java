@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Meds extends Controller{
     public Result index(){
-        return ok(views.html.Meds.index.render("Medications"));
+        return ok(views.html.Meds.index.render(""));
     }
 
 }

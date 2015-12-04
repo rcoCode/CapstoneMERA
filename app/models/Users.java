@@ -5,12 +5,10 @@ import org.mindrot.jbcrypt.BCrypt;
 import play.data.validation.Constraints;
 
 
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Column;
+import javax.persistence.*;
 import javax.validation.Constraint;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by rebeca on 11/17/2015.
@@ -33,7 +31,7 @@ public class Users extends Model{
         return BCrypt.checkpw(password, this.password_hash);
     }
 
-    public static Users createNewUser(String username, String password, String fName) {
+    public static Users createNewUser(String username, String password, String fName, String lName) {
         if(password == null || username == null || password.length() < 8) {
             return null;
         }
@@ -45,13 +43,19 @@ public class Users extends Model{
         User.username = username;
         User.password_hash = passwordHash;
         User.Fname= fName;
+        User.Lname= lName;
 
         return User;
     }
 
-
-
     public  String Fname;
 
     public String Lname;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    public List<Contact> contacts;
+
+    @OneToOne
+    public Dispensor device;
+
 }

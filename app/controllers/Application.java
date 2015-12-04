@@ -35,12 +35,17 @@ public class Application extends Controller {
     }
 
     public Result signup() {
+        return ok(views.html.signup.render(""));
+    }
+
+    public Result newUser() {
         DynamicForm userForm = form().bindFromRequest();
         String username = userForm.data().get("username");
         String password = userForm.data().get("password");
         String fName = userForm.data().get("fName");
+        String lName = userForm.data().get("lName");
 
-        Users nUser = Users.createNewUser(username, password, fName);
+        Users nUser = Users.createNewUser(username, password, fName, lName);
 
         if(nUser == null) {
             flash("error", "Invalid user");

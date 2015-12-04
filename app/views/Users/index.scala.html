@@ -1,7 +1,8 @@
 @(users: String)
 
 @main("Profile") {
-<h1>New Medication</h1>
+
+<h2>New Medication</h2>
 <form action="@routes.Users.createMed()" method="post">
     <div class="col-md-4">
         <label for="med_name">Name</label>
@@ -21,6 +22,20 @@
         <br>
     </div>
 
+    <div class="col-md-3">
+        <label for="time">Time of First dose</label>
+       <input type="text" name="time" class="form-control input-lg">
+        <br>
+    </div>
+
+    <div class="col-md-3">
+        <select name="am" id="am">
+            <option value="am">AM</option>
+            <option value="pm">PM</option>
+        </select>
+        <br>
+    </div>
+
     <div class="col-md-4">
         <label for="week">Days per week medication needed</label>
         <input type="text" name="week" class="form-control input-lg">
@@ -30,6 +45,12 @@
     <div class="col-md-4">
         <label for="month">Weeks per Month needed</label>
         <input type="text" name="month" class="form-control input-lg">
+        <br>
+    </div>
+
+    <div class="col-md-4">
+        <label for="contain">Container ID</label>
+        <input type="text" name="contain" class="form-control input-lg">
         <br>
     </div>
 
