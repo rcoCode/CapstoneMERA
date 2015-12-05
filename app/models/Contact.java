@@ -28,7 +28,7 @@ public class Contact extends Model{
 
     public String phone;
 
-    @ManyToMany(mappedBy = "user_id")
+    @ManyToMany(mappedBy = "contacts")
     public List<Users> caredFor;
 
 }
