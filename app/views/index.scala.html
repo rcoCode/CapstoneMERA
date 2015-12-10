@@ -18,7 +18,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href=@routes.Application.signup() method="get">Sign Up</a>
+                    <a href=@routes.Application.signup() method="get"><span class="glyphicon glyphicon-user"></span>Sign Up</a>
                 </li>
             </ul>
         </div>
@@ -28,14 +28,14 @@
 </nav>
 
 <h1>Login Form</h1>
-<form action="@routes.Application.login()" method="post">
-    <div class="col-md-4">
+<form class="form-horizontal" action="@routes.Application.login()" method="post">
+    <div class="form-group">
         <label for="username">Username</label>
         <input type="text" name="username" class="form-control input-lg">
         <br>
     </div>
 
-    <div class="col-md-4">
+    <div class="form-group">
         <label for="password">Password</label>
         <input type="password" name="password" class="form-control input-lg">
         <br>
