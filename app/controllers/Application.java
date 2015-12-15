@@ -25,7 +25,7 @@ public class Application extends Controller {
 
         if(users != null && users.authenticate(password)) {
             session("user_id", users.id.toString());
-            flash("success", "Welcome back " + users.username);
+            flash("success", "Welcome back " + users.Fname);
         } else {
             flash("error", "Invalid login. Check your username and password.");
             return redirect(routes.Application.index());
