@@ -17,6 +17,7 @@ create table containers (
   device_id                 bigint,
   empty                     boolean,
   medication_id             bigint,
+  pill_count                bigint,
   constraint uq_containers_medication_id unique (medication_id),
   constraint pk_containers primary key (id))
 ;

@@ -20,9 +20,7 @@ public class Application extends Controller {
         DynamicForm userForm=form().bindFromRequest();
         String username=userForm.data().get("username");
         String password=userForm.data().get("password");
-
         Users users=Users.find.where().eq("username",username).findUnique();
-
         if(users != null && users.authenticate(password)) {
             session("user_id", users.id.toString());
             flash("success", "Welcome back " + users.Fname);
@@ -44,15 +42,21 @@ public class Application extends Controller {
         String password = userForm.data().get("password");
         String fName = userForm.data().get("fName");
         String lName = userForm.data().get("lName");
+        String dID = userForm.data().get("dID");
 
-        Users nUser = Users.createNewUser(username, password, fName, lName);
+        if (username.isEmpty() || password.isEmpty()) {
+            //flash and redirect
+        }
+
+        //Users nUser = Users.createNewUser(username, password, fName, lName);
+        Users nUser = Users.createNewUser(username, password, fName, lName, Long.valueOf(dID));
 
         if(nUser == null) {
             flash("error", "Invalid user");
             return redirect(routes.Application.index());
         }
 
-        nUser.save();
+        //nUser.save();
 
         flash("success", "Welcome new user " + nUser.username);
         session("user_id", nUser.id.toString());
@@ -63,5 +67,7 @@ public class Application extends Controller {
         session().remove("user_id");
         return redirect(routes.Application.index());
     }
+
+
 
 }

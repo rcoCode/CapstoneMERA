@@ -23,5 +23,23 @@ public class Containers extends Model{
     @OneToOne
     public Meds medication;
 
+    public Long pillCount;
+
     public static Finder<Long,Containers> find=new Finder<Long, Containers>(Containers.class);
+
+    public static void containersMedication ( Meds medication, Long pillCount, Long containerID) {
+        Containers container = Containers.find.byId(containerID);
+        container.medication = medication;
+        container.empty = false;
+        container.pillCount = pillCount;
+        container.save();
+    }
+
+    public static Containers createContainer(Dispensor device) {
+        Containers container = new Containers();
+        container.device = device;
+        container.empty=true;
+        container.save();
+        return container;
+    }
 }

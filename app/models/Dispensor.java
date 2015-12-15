@@ -21,7 +21,26 @@ public class Dispensor extends Model{
 
     public Date endTime;
 
-    @OneToOne
+    public static Finder<Long, Dispensor> find=new Finder<Long, Dispensor>(Dispensor.class);
+
+    public static Dispensor createNewDispensor(Users user) {
+
+        if (user == null) {
+            return null;
+        }
+        Dispensor device = new Dispensor();
+//        System.out.print(user.Fname);
+        device.owner = user;
+//        System.out.print(device.owner.Fname);
+        device.save();
+        Containers container1 = Containers.createContainer(device);
+        Containers container2 = Containers.createContainer(device);
+        Containers container3 = Containers.createContainer(device);
+        return device;
+    }
+
+
+        @OneToOne
     public Users owner;
 
     @OneToMany

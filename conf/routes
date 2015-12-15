@@ -11,7 +11,14 @@ GET     /signup                     controllers.Application.signup()
 GET     /logout                     controllers.Application.logout()
 
 GET     /Users                      controllers.Users.index()
-POST    /newMed                      controllers.Users.createMed()
+POST    /newMed                     controllers.Users.createMed()
+
+#POST    /newMed/:id                      controllers.Users.createMed(id:Long)
+
+#Anahi: The stuff I am messing around with
+#GET     /data/:id                       controllers.Requests.userData(id)
+GET     /dispenser                       controllers.Requests.dispenserData(id: Long?= 0)
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

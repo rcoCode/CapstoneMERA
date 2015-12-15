@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by rebeca on 11/17/2015.
@@ -37,7 +38,7 @@ public class Meds extends Model{
     @OneToOne
     public Containers storedIn;
 
-    public static Meds createNewMed(String medName,Long dosage,Date sched,Long week,Long month,Long day,Containers contain) {
+    public static Meds createNewMed(String medName,Long dosage,Date sched,Long week,Long month,Long day, Long contain, Long pillCount, Dispensor device) {
         if(medName == null || dosage==null || (week == null && month == null && day == null)) {
             return null;
         }
@@ -49,10 +50,12 @@ public class Meds extends Model{
         med.perWk =week;
         med.perMnth =month;
         med.perDay =day;
-        med.storedIn=contain;
-
         med.save();
-
+        List<Containers> containers = Containers.find.where().eq("empty", true).eq("device",device).findList();
+        System.out.print("Found " + Integer.toString(containers.size()) + " Empty Containers");
+        Containers container = containers.get(0);
+        container.containersMedication(med,pillCount,container.id);
+        med.storedIn = container;
         return med;
     }
 

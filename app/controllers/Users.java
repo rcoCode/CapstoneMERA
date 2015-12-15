@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Containers;
+import models.Dispensor;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.*;
@@ -32,6 +33,7 @@ public class Users extends Controller{
         String month=medsForm.data().get("month");
         String day=medsForm.data().get("day");
         String contain=medsForm.data().get("contain");
+        String pills=medsForm.data().get("pills");
 
         Long nDose=Long.parseLong(dosage,10);
         Date mTime= null;
@@ -46,9 +48,18 @@ public class Users extends Controller{
         Long nWeek=Long.parseLong(week,10);
         Long nMonth=Long.parseLong(month,10);
         Long cId=Long.parseLong(contain,10);
-        Containers inContain=Containers.find.byId(cId);
+        Long pillCount=Long.parseLong(pills,10);
 
-        Meds nMed = Meds.createNewMed(med_name,nDose,mTime,nWeek,nMonth,nDay,inContain);
+//        Containers inContain=Containers.find.byId(cId);
+
+        //Dispensor device = Dispensor.find
+        Long userID=Long.parseLong(session().get("user_id"));
+        models.Users user = models.Users.find.byId(userID);
+
+        Dispensor device = Dispensor.find.where().eq("owner",user).findUnique();
+//
+//
+        Meds nMed = Meds.createNewMed(med_name,nDose,mTime,nWeek,nMonth,nDay,cId, pillCount,device);
 
         if(nMed==null){
             flash("error","Invalid Medication");
