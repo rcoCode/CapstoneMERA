@@ -17,6 +17,7 @@ public class Dispensor extends Model{
     @Id
     public Long id;
 
+
     public static Finder<Long, Dispensor> find=new Finder<Long, Dispensor>(Dispensor.class);
 
     public static Dispensor createNewDispensor(Users user, Date operationStartTime, Date operationEndTime) {
@@ -46,4 +47,5 @@ public class Dispensor extends Model{
     public Date startTime;
 
     public Date endTime;
+
 }

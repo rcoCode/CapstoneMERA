@@ -44,9 +44,9 @@ public class Requests extends Controller {
                             containerInformation.put("Pill Count", container.pillCount);
                             if (container.medication!=null) {
                                 ObjectNode medicine = Json.newObject();
-                                medicine.put("Name",container.medication.name);
+//                                medicine.put("Name",container.medication.name);
                                 medicine.put("Dose", container.medication.dose);
-                                medicine.put("Frequency (Changes Needed)", container.medication.perDay);
+                                medicine.put("Frequency", container.medication.perDay);
                                 containerInformation.put("Medication",medicine);
                             }
                             containerContent.add(containerInformation);
@@ -56,7 +56,6 @@ public class Requests extends Controller {
             }
         }
         dispenserInformation.put("Containers",containerContent);
-
         return ok(dispenserInformation);
     }
 }
