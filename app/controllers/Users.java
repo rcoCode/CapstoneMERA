@@ -29,14 +29,14 @@ public class Users extends Controller{
         String med_name=medsForm.data().get("med_name");
         String dosage=medsForm.data().get("dosage");
         String inTime=medsForm.data().get("time")+" "+medsForm.data().get("am");
+        String dailyTime=medsForm.data().get("timeDaily")+" "+medsForm.data().get("tc");
         String week=medsForm.data().get("week");
         String month=medsForm.data().get("month");
         String day=medsForm.data().get("day");
-        String contain=medsForm.data().get("contain");
         String pills=medsForm.data().get("pills");
-
         Long nDose=Long.parseLong(dosage,10);
         Date mTime= null;
+        Date dTime = null;
         DateFormat inFormat= new SimpleDateFormat("hh:mm aa");
         try {
             mTime = inFormat.parse(inTime);
@@ -44,25 +44,29 @@ public class Users extends Controller{
         catch (ParseException e){
             e.printStackTrace();
         }
+        DateFormat inDailyFormat = new SimpleDateFormat("hh:mm aa");
+        try {
+            dTime = inFormat.parse(dailyTime);
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         Long nDay=Long.parseLong(day,10);
         Long nWeek=Long.parseLong(week,10);
         Long nMonth=Long.parseLong(month,10);
-        Long cId=Long.parseLong(contain,10);
         Long pillCount=Long.parseLong(pills,10);
 
-//        Containers inContain=Containers.find.byId(cId);
-
-        //Dispensor device = Dispensor.find
         Long userID=Long.parseLong(session().get("user_id"));
         models.Users user = models.Users.find.byId(userID);
 
         Dispensor device = Dispensor.find.where().eq("owner",user).findUnique();
-//
-//
-        Meds nMed = Meds.createNewMed(med_name,nDose,mTime,nWeek,nMonth,nDay,cId, pillCount,device);
+
+        Meds nMed = Meds.createNewMed(med_name,nDose,mTime,dTime,nWeek,nMonth,nDay, pillCount,device);
 
         if(nMed==null){
-            flash("error","Invalid Medication");
+            flash("error","No Container Could Be Found"); //Most likely error
+            //flash("error","Invalid Medication or No Container Could Be Found");
         }
 
         return redirect(routes.Users.index());

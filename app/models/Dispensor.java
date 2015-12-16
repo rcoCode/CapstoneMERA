@@ -17,32 +17,35 @@ public class Dispensor extends Model{
     @Id
     public Long id;
 
-    public Date startTime;
-
-    public Date endTime;
 
     public static Finder<Long, Dispensor> find=new Finder<Long, Dispensor>(Dispensor.class);
 
-    public static Dispensor createNewDispensor(Users user) {
+    public static Dispensor createNewDispensor(Users user, Date operationStartTime, Date operationEndTime) {
 
         if (user == null) {
             return null;
         }
         Dispensor device = new Dispensor();
-//        System.out.print(user.Fname);
         device.owner = user;
-//        System.out.print(device.owner.Fname);
+        device.startTime = operationStartTime;
+        device.endTime = operationEndTime;
         device.save();
+
         Containers container1 = Containers.createContainer(device);
         Containers container2 = Containers.createContainer(device);
         Containers container3 = Containers.createContainer(device);
+
         return device;
     }
 
-
-        @OneToOne
+    @OneToOne
     public Users owner;
 
     @OneToMany
     public List<Containers> containers;
+
+    public Date startTime;
+
+    public Date endTime;
+
 }

@@ -24,9 +24,9 @@ create table containers (
 
 create table dispensor (
   id                        bigserial not null,
+  owner_id                  bigint,
   start_time                timestamp,
   end_time                  timestamp,
-  owner_id                  bigint,
   constraint uq_dispensor_owner_id unique (owner_id),
   constraint pk_dispensor primary key (id))
 ;
@@ -36,6 +36,7 @@ create table meds (
   name                      varchar(255),
   dose                      bigint,
   schedule                  timestamp,
+  daily_time                timestamp,
   per_wk                    bigint,
   per_mnth                  bigint,
   per_day                   bigint,

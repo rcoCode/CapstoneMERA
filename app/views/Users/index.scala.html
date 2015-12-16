@@ -26,7 +26,7 @@
     </div>
 
     <div class="form-group">
-        <label class="control-label col-sm-2" for="time">Time of First dose</label>
+        <label class="control-label col-sm-2" for="time">Time of First (Ever) dose</label>
         <div class="col-sm-10">
             <input type="text" name="time" class="form-control input-lg">
         </div>
@@ -43,6 +43,23 @@
     </div>
 
     <div class="form-group">
+        <label class="control-label col-sm-2" for="timeDaily">Time of First Daily dose</label>
+        <div class="col-sm-10">
+            <input type="text" name="timeDaily" class="form-control input-lg">
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="dropdown">
+            <select name="tc" id="tc">
+                <option value="am">AM</option>
+                <option value="pm">PM</option>
+            </select>
+        </div>
+        <br>
+    </div>
+
+    <div class="form-group">
         <label class="control-label col-sm-2" for="week">Days per week medication needed</label>
         <div class="col-sm-10">
             <input type="text" name="week" class="form-control input-lg">
@@ -50,21 +67,21 @@
     </div>
 
     <div class="form-group">
-        <label class="control-label col-sm-2" for="month">Weeks per Month needed</lab..................................................................el>-*
+        <label class="control-label col-sm-2" for="month">Weeks per Month needed</label>
         <div class="col-sm-10">
             <input type="text" name="month" class="form-control input-lg">
         </div>
     </div>
 
-    <div class="form-group">
-        <label class="control-label col-sm-2" for="contain">Container ID</label>
-        <div class="col-sm-10">
-            <input type="text" name="contain" class="form-control input-lg">
-        </div>
-    </div>
+    <!--<div class="form-group">-->
+        <!--<label class="control-label col-sm-2" for="contain">Container ID</label>-->
+        <!--<div class="col-sm-10">-->
+            <!--<input type="text" name="contain" class="form-control input-lg">-->
+        <!--</div>-->
+    <!--</div>-->
 
     <div class="col-md-4">
-        <label for="pills">Pill Count</label>
+        <label for="pills">Pill Count Loaded to Container</label>
         <input type="text" name="pills" class="form-control input-lg">
         <br>
     </div>
