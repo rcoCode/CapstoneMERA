@@ -24,6 +24,9 @@ public class Containers extends Model{
     @OneToOne
     public Meds medication;
 
+    @ManyToOne
+    public Users owner;
+
     public Long pillCount;
 
     public static Finder<Long,Containers> find=new Finder<Long, Containers>(Containers.class);
@@ -39,6 +42,7 @@ public class Containers extends Model{
     public static Containers createContainer(Dispensor device) {
         Containers container = new Containers();
         container.device = device;
+        container.owner = device.owner;
         container.empty=true;
         container.save();
         return container;

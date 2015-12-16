@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import org.joda.time.DateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,7 +21,7 @@ public class Dispensor extends Model{
 
     public static Finder<Long, Dispensor> find=new Finder<Long, Dispensor>(Dispensor.class);
 
-    public static Dispensor createNewDispensor(Users user, Date operationStartTime, Date operationEndTime) {
+    public static Dispensor createNewDispensor(Users user, DateTime operationStartTime, DateTime operationEndTime) {
 
         if (user == null) {
             return null;
@@ -41,11 +42,11 @@ public class Dispensor extends Model{
     @OneToOne
     public Users owner;
 
-    @OneToMany
+    @OneToMany(mappedBy = "device")
     public List<Containers> containers;
 
-    public Date startTime;
+    public DateTime startTime;
 
-    public Date endTime;
+    public DateTime endTime;
 
 }

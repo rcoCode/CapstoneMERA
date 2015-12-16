@@ -17,6 +17,7 @@ create table containers (
   device_id                 bigint,
   empty                     boolean,
   medication_id             bigint,
+  owner_id                  bigint,
   pill_count                bigint,
   constraint uq_containers_medication_id unique (medication_id),
   constraint pk_containers primary key (id))
@@ -40,6 +41,7 @@ create table meds (
   per_wk                    bigint,
   per_mnth                  bigint,
   per_day                   bigint,
+  frequency                 bigint,
   stored_in_id              bigint,
   constraint uq_meds_stored_in_id unique (stored_in_id),
   constraint pk_meds primary key (id))
@@ -58,33 +60,35 @@ create table Users (
 ;
 
 
-create table Users_contact (
-  Users_id                       bigint not null,
+create table contact_Users (
   contact_id                     bigint not null,
-  constraint pk_Users_contact primary key (Users_id, contact_id))
+  Users_id                       bigint not null,
+  constraint pk_contact_Users primary key (contact_id, Users_id))
 ;
 alter table containers add constraint fk_containers_device_1 foreign key (device_id) references dispensor (id);
 create index ix_containers_device_1 on containers (device_id);
 alter table containers add constraint fk_containers_medication_2 foreign key (medication_id) references meds (id);
 create index ix_containers_medication_2 on containers (medication_id);
-alter table dispensor add constraint fk_dispensor_owner_3 foreign key (owner_id) references Users (id);
-create index ix_dispensor_owner_3 on dispensor (owner_id);
-alter table meds add constraint fk_meds_storedIn_4 foreign key (stored_in_id) references containers (id);
-create index ix_meds_storedIn_4 on meds (stored_in_id);
-alter table Users add constraint fk_Users_device_5 foreign key (device_id) references dispensor (id);
-create index ix_Users_device_5 on Users (device_id);
+alter table containers add constraint fk_containers_owner_3 foreign key (owner_id) references Users (id);
+create index ix_containers_owner_3 on containers (owner_id);
+alter table dispensor add constraint fk_dispensor_owner_4 foreign key (owner_id) references Users (id);
+create index ix_dispensor_owner_4 on dispensor (owner_id);
+alter table meds add constraint fk_meds_storedIn_5 foreign key (stored_in_id) references containers (id);
+create index ix_meds_storedIn_5 on meds (stored_in_id);
+alter table Users add constraint fk_Users_device_6 foreign key (device_id) references dispensor (id);
+create index ix_Users_device_6 on Users (device_id);
 
 
 
-alter table Users_contact add constraint fk_Users_contact_Users_01 foreign key (Users_id) references Users (id);
+alter table contact_Users add constraint fk_contact_Users_contact_01 foreign key (contact_id) references contact (id);
 
-alter table Users_contact add constraint fk_Users_contact_contact_02 foreign key (contact_id) references contact (id);
+alter table contact_Users add constraint fk_contact_Users_Users_02 foreign key (Users_id) references Users (id);
 
 # --- !Downs
 
 drop table if exists contact cascade;
 
-drop table if exists Users_contact cascade;
+drop table if exists contact_Users cascade;
 
 drop table if exists containers cascade;
 

@@ -2,6 +2,8 @@ package models;
 
 import com.avaje.ebean.Expr;
 import com.avaje.ebean.Model;
+import com.avaje.ebean.config.JsonConfig;
+import org.joda.time.DateTime;
 import org.mindrot.jbcrypt.BCrypt;
 import play.data.validation.Constraints;
 
@@ -34,7 +36,7 @@ public class Users extends Model{
         return BCrypt.checkpw(password, this.password_hash);
     }
 
-    public static Users createNewUser(String username, String password, String fName, String lName, Long dID, Date startTime, Date endTime) {
+    public static Users createNewUser(String username, String password, String fName, String lName, Long dID, DateTime startTime, DateTime endTime) {
         if(password == null || username == null || password.length() < 8) {
             return null;
         }
@@ -78,10 +80,13 @@ public class Users extends Model{
 
     public String Lname;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "caredFor")
     public List<Contact> contacts;
 
     @OneToOne
     public Dispensor device;
+
+    @OneToMany(mappedBy = "owner")
+    public List<Containers> myMeds;
 
 }

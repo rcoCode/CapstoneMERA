@@ -3,10 +3,7 @@ package models;
 import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -28,7 +25,7 @@ public class Contact extends Model{
 
     public String phone;
 
-    @ManyToMany(mappedBy = "contacts")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     public List<Users> caredFor;
 
 }
