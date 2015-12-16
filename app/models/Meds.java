@@ -29,19 +29,23 @@ public class Meds extends Model{
 
     public Date schedule;
 
+    public Date dailyTime;
+
     public Long perWk;
 
     public Long perMnth;
 
     public Long perDay;
 
+
     @OneToOne
     public Containers storedIn;
 
-    public static Meds createNewMed(String medName,Long dosage,Date sched,Long week,Long month,Long day, Long contain, Long pillCount, Dispensor device) {
+    public static Meds createNewMed(String medName,Long dosage,Date sched, Date daily, Long week,Long month,Long day, Long pillCount, Dispensor device) {
         if(medName == null || dosage==null || (week == null && month == null && day == null)) {
             return null;
         }
+        System.out.print("Creating Medication");
 
         Meds med = new Meds();
         med.name =medName;
@@ -50,12 +54,13 @@ public class Meds extends Model{
         med.perWk =week;
         med.perMnth =month;
         med.perDay =day;
+        med.dailyTime = daily;
         med.save();
         List<Containers> containers = Containers.find.where().eq("empty", true).eq("device",device).findList();
-        System.out.print("Found " + Integer.toString(containers.size()) + " Empty Containers");
         Containers container = containers.get(0);
         container.containersMedication(med,pillCount,container.id);
         med.storedIn = container;
+        med.save();
         return med;
     }
 

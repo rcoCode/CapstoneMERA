@@ -8,6 +8,7 @@ import play.data.validation.Constraints;
 
 import javax.persistence.*;
 import javax.validation.Constraint;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -26,13 +27,14 @@ public class Users extends Model{
 
     public String password_hash;
 
+
     public static Finder<Long, Users> find=new Finder<Long, Users>(Users.class);
 
     public boolean authenticate(String password) {
         return BCrypt.checkpw(password, this.password_hash);
     }
 
-    public static Users createNewUser(String username, String password, String fName, String lName, Long dID) {
+    public static Users createNewUser(String username, String password, String fName, String lName, Long dID, Date startTime, Date endTime) {
         if(password == null || username == null || password.length() < 8) {
             return null;
         }
@@ -53,10 +55,11 @@ public class Users extends Model{
         User.Fname= fName;
         User.Lname= lName;
         User.save();
+
         //This needs to be modified so the dispensor are created by Pi
         models.Dispensor dispensor = Dispensor.find.byId(dID);
         if (dispensor==null) {
-            dispensor = Dispensor.createNewDispensor(User);
+            dispensor = Dispensor.createNewDispensor(User, startTime, endTime);
             if (dispensor == null) {
                 return null; // user does not exist
             }
