@@ -2,10 +2,7 @@ package models;
 
 import com.avaje.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -21,7 +18,7 @@ public class Containers extends Model{
 
     public Boolean empty;
 
-    @OneToOne
+    @OneToOne(mappedBy = "storedIn")
     public Meds medication;
 
     @ManyToOne
@@ -44,7 +41,6 @@ public class Containers extends Model{
         container.device = device;
         container.owner = device.owner;
         container.empty=true;
-        container.save();
         return container;
     }
 }

@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Dispensor;
 import models.Users;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -52,12 +53,16 @@ public class Application extends Controller {
         DateTime sTime = format.parseDateTime(startTime);
         DateTime eTime = format.parseDateTime(endTime);
 
-
-        Users newUser = Users.createNewUser(username, password, fName, lName, Long.valueOf(dID), sTime, eTime);
+        Users newUser = Users.createNewUser(username, password, fName, lName);
 
         if(newUser == null) {
             flash("error", "Invalid user");
             return redirect(routes.Application.index());
+        }
+        Long d_id = Long.parseLong(dID);
+        Dispensor device = Dispensor.find.byId(d_id);
+        if(device == null){
+            device = Dispensor.createNewDispensor(newUser,sTime,eTime);
         }
 
         flash("success", "Welcome new user " + newUser.Fname);

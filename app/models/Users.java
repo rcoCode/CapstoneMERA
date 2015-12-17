@@ -36,7 +36,7 @@ public class Users extends Model{
         return BCrypt.checkpw(password, this.password_hash);
     }
 
-    public static Users createNewUser(String username, String password, String fName, String lName, Long dID, DateTime startTime, DateTime endTime) {
+    public static Users createNewUser(String username, String password, String fName, String lName) {
         if(password == null || username == null || password.length() < 8) {
             return null;
         }
@@ -58,21 +58,6 @@ public class Users extends Model{
         User.Lname= lName;
         User.save();
 
-        //This needs to be modified so the dispensor are created by Pi
-        models.Dispensor dispensor = Dispensor.find.byId(dID);
-        if (dispensor==null) {
-            dispensor = Dispensor.createNewDispensor(User, startTime, endTime);
-            if (dispensor == null) {
-                return null; // user does not exist
-            }
-            System.out.print("Device Owner "+ dispensor.owner.Fname+'\n');
-        }
-        else {
-            if (dispensor.owner != null) {
-                return null;
-            }
-        }
-
         return User;
     }
 
@@ -83,7 +68,7 @@ public class Users extends Model{
     @ManyToMany(mappedBy = "caredFor")
     public List<Contact> contacts;
 
-    @OneToOne
+    @OneToOne(mappedBy = "owner")
     public Dispensor device;
 
     @OneToMany(mappedBy = "owner")

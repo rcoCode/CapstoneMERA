@@ -32,9 +32,8 @@ public class Dispensor extends Model{
         device.endTime = operationEndTime;
         device.save();
 
-        Containers container1 = Containers.createContainer(device);
-        Containers container2 = Containers.createContainer(device);
-        Containers container3 = Containers.createContainer(device);
+        Containers one = Containers.createContainer(device);
+        one.save();
 
         return device;
     }

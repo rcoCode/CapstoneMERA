@@ -11,8 +11,14 @@ GET     /signup                     controllers.Application.signup()
 GET     /logout                     controllers.Application.logout()
 
 GET     /Users/:id                  controllers.Users.index(id:Long)
-GET     /meds                       controllers.Meds.index()
+
+GET     /meds/:id                   controllers.Meds.index(id:Long)
 POST    /newMed/:id                 controllers.Meds.createMed(id:Long)
+GET     /meds/disp/:id              controllers.Meds.show(id:Long)
+
+GET     /con/:id                    controllers.container.index(id:Long)
+POST    /con/:id                    controllers.container.edit(id:Long)
+POST    /con/empty/:id              controllers.container.removeMed(id:Long)
 
 
 #Anahi: The stuff I am messing around with

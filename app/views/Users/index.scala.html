@@ -1,6 +1,40 @@
 @(mymeds:List[Containers])
 
 @main("Profile") {
-
+<div class="container">
+    <h1>My Medications</h1>
+    @if(mymeds.isEmpty){
+    <h3><em>No medications stored</em></h3>
+    }   else{
+    <ul>
+        @for(m<-mymeds){
+            @if(m.medication != null){
+            <li>
+                <a href="@routes.Meds.show(m.medication.id)"><button class="btn btn-link btn-lg">@m.medication.name stored in Container @m.medication.storedIn.id</button></a>
+            </li>
+            }
+        }
+    </ul>
+    }
+    <h1>Empty Containers</h1>
+    @if(mymeds.isEmpty){
+    <h3><em>No containers detected</em></h3>
+    }   else{
+    <ul>
+        @for(m<-mymeds){
+            @if(m.medication != null && m.empty == true){
+            <li>
+                <a href="@routes.container.edit(m.id)"><button class="btn btn-link btn-lg">Empty Container @m.id</button></a>
+            </li>
+            }
+            @if(m.medication == null){
+            <li>
+                <a href='@routes.Meds.index(Long.parseLong(session().get("user_id")))'><button class="btn btn-link btn-lg">Empty Container @m.id</button></a>
+            </li>
+            }
+        }
+    </ul>
+    }
+</div>
 
 }

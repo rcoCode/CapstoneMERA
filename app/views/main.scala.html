@@ -41,7 +41,6 @@
     </nav>
 
     <div class="container jumbotron">
-        <center class="row">
             <center>
                     @* Display flash messages *@
                     @if(flash.containsKey("success")) {
@@ -52,9 +51,8 @@
                     <p>Error Flash Message:</p>
                     @flash.get("error")
                     }
-                @content
             </center>
-        </div>
+    @content
     </div>
 
         <script src="lib/bootstrap/js/bootstrap.min.js"></script>

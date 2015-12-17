@@ -16,10 +16,8 @@ create table containers (
   id                        bigserial not null,
   device_id                 bigint,
   empty                     boolean,
-  medication_id             bigint,
   owner_id                  bigint,
   pill_count                bigint,
-  constraint uq_containers_medication_id unique (medication_id),
   constraint pk_containers primary key (id))
 ;
 
@@ -52,9 +50,7 @@ create table Users (
   password_hash             varchar(255),
   fname                     varchar(255),
   lname                     varchar(255),
-  device_id                 bigint,
   constraint uq_Users_username unique (username),
-  constraint uq_Users_device_id unique (device_id),
   constraint pk_Users primary key (id))
 ;
 
@@ -66,16 +62,12 @@ create table contact_Users (
 ;
 alter table containers add constraint fk_containers_device_1 foreign key (device_id) references dispensor (id);
 create index ix_containers_device_1 on containers (device_id);
-alter table containers add constraint fk_containers_medication_2 foreign key (medication_id) references meds (id);
-create index ix_containers_medication_2 on containers (medication_id);
-alter table containers add constraint fk_containers_owner_3 foreign key (owner_id) references Users (id);
-create index ix_containers_owner_3 on containers (owner_id);
-alter table dispensor add constraint fk_dispensor_owner_4 foreign key (owner_id) references Users (id);
-create index ix_dispensor_owner_4 on dispensor (owner_id);
-alter table meds add constraint fk_meds_storedIn_5 foreign key (stored_in_id) references containers (id);
-create index ix_meds_storedIn_5 on meds (stored_in_id);
-alter table Users add constraint fk_Users_device_6 foreign key (device_id) references dispensor (id);
-create index ix_Users_device_6 on Users (device_id);
+alter table containers add constraint fk_containers_owner_2 foreign key (owner_id) references Users (id);
+create index ix_containers_owner_2 on containers (owner_id);
+alter table dispensor add constraint fk_dispensor_owner_3 foreign key (owner_id) references Users (id);
+create index ix_dispensor_owner_3 on dispensor (owner_id);
+alter table meds add constraint fk_meds_storedIn_4 foreign key (stored_in_id) references containers (id);
+create index ix_meds_storedIn_4 on meds (stored_in_id);
 
 
 

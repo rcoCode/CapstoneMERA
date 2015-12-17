@@ -35,11 +35,10 @@ public class Meds extends Model{
 
     public Long frequency;
 
-
     @OneToOne
     public Containers storedIn;
 
-    public static Meds createNewMed(String medName,Long dosage,DateTime sched, DateTime daily,Long freq,Long week,Long month,Long pillCount, Dispensor device) {
+    public static Meds createNewMed(String medName,Long dosage,DateTime sched, DateTime daily,Long freq,Long week,Long month,Containers stored) {
         if(medName == null || dosage==null || (week == null && month == null)) {
             return null;
         }
@@ -53,13 +52,14 @@ public class Meds extends Model{
         med.perWk =week;
         med.perMnth =month;
         med.dailyTime = daily;
-        med.save();
-        List<Containers> containers = Containers.find.where().eq("empty", true).eq("device",device).findList();
-        Containers container = containers.get(0);
-        container.containersMedication(med,pillCount,container.id);
-        med.storedIn = container;
-        med.save();
+        med.storedIn = stored;
         return med;
+    }
+
+    public String niceDate(Long m_id){
+        Meds med = Meds.find.byId(m_id);
+        String time = med.dailyTime.toString("hh:mm aa");
+        return time;
     }
 
 }
