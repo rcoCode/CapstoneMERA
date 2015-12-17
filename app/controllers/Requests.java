@@ -31,9 +31,10 @@ public class Requests extends Controller {
             if (device!=null) {
                 dispenserInformation.put("Dispenser ID",device.id);
 //                dispenserInformation.put("Raspberry Pi ID",device.dispenser);
-                SimpleDateFormat time = new SimpleDateFormat("hh:mm aa");
-                dispenserInformation.put("Operation Start Time",time.format(device.startTime));
-                dispenserInformation.put("Operation End Time",time.format(device.endTime));
+                String sTime = device.startTime.toString("hh:mm aa");
+                String eTime = device.endTime.toString("hh:mm aa");
+                dispenserInformation.put("Operation Start Time",sTime);
+                dispenserInformation.put("Operation End Time",eTime);
                 if (device.owner!=null) {
                     List<Containers> containers;
                     containers = Containers.find.where().eq("device",device).eq("empty",false).findList();
@@ -46,7 +47,7 @@ public class Requests extends Controller {
                                 ObjectNode medicine = Json.newObject();
 //                                medicine.put("Name",container.medication.name);
                                 medicine.put("Dose", container.medication.dose);
-                                medicine.put("Frequency", container.medication.perDay);
+                                medicine.put("Frequency", container.medication.frequency);
                                 containerInformation.put("Medication",medicine);
                             }
                             containerContent.add(containerInformation);

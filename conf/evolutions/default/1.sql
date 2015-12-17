@@ -40,7 +40,6 @@ create table meds (
   daily_time                timestamp,
   per_wk                    bigint,
   per_mnth                  bigint,
-  per_day                   bigint,
   frequency                 bigint,
   stored_in_id              bigint,
   constraint uq_meds_stored_in_id unique (stored_in_id),

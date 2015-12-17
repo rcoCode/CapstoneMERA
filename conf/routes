@@ -11,7 +11,7 @@ GET     /signup                     controllers.Application.signup()
 GET     /logout                     controllers.Application.logout()
 
 GET     /Users/:id                  controllers.Users.index(id:Long)
-
+GET     /meds                       controllers.Meds.index()
 POST    /newMed/:id                 controllers.Meds.createMed(id:Long)
 
 

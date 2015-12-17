@@ -48,7 +48,7 @@ public class Application extends Controller {
         String endTime=userForm.data().get("oET");
 
         //Date Time
-        DateTimeFormatter format = DateTimeFormat.forPattern("hh:mm aa");
+        DateTimeFormatter format = DateTimeFormat.forPattern("hh:mm");
         DateTime sTime = format.parseDateTime(startTime);
         DateTime eTime = format.parseDateTime(endTime);
 
