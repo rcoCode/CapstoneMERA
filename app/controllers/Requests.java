@@ -34,11 +34,12 @@ public class Requests extends Controller {
     public Result dispenserData(Long dID) {
         ObjectNode dispenserInformation = Json.newObject();
         ArrayNode containerContent = dispenserInformation.arrayNode();
+        Boolean validID = false;
         if (dID!=0) { //dID == 0 is the default value therefore an error
-            Dispensor device = Dispensor.find.byId(dID);
+            Dispensor device = Dispensor.find.where().eq("dispenser",dID).findUnique();
             if (device!=null) {
-                dispenserInformation.put("Dispenser ID",device.id);
-//                dispenserInformation.put("Raspberry Pi ID",device.dispenser);
+                validID = true;
+                dispenserInformation.put("Dispenser ID",device.dispenser);
                 String sTime = device.startTime.toString("hh:mm aa");
                 String eTime = device.endTime.toString("hh:mm aa");
                 dispenserInformation.put("Operation Start Time",sTime);
@@ -48,17 +49,20 @@ public class Requests extends Controller {
                     containers = Containers.find.where().eq("device",device).eq("empty",false).findList();
                     if (containers!=null) {
                         for (Containers container: containers) {
-                            ObjectNode containerInformation = Json.newObject();
-                            containerInformation.put("Container ID", container.id);
-                            containerInformation.put("Pill Count", container.pillCount);
-                            if (container.medication!=null) {
+//                            container.updated = false;
+                            if (container.medication!=null && container.medication.updated==true) {
+                                ObjectNode containerInformation = Json.newObject();
+                                containerInformation.put("Container ID", container.id);
+                                containerInformation.put("Pill Count", container.pillCount);
+//                                containerInformation.put("Updated", container.medication.updated);
+                                container.medication.updated = false;
+                                container.medication.save();
                                 ObjectNode medicine = Json.newObject();
-//                                medicine.put("Name",container.medication.name);
                                 medicine.put("Dose", container.medication.dose);
                                 medicine.put("Frequency", container.medication.frequency);
                                 containerInformation.put("Medication",medicine);
+                                containerContent.add(containerInformation);
                             }
-                            containerContent.add(containerInformation);
                         }
                     }
                 }
@@ -70,8 +74,14 @@ public class Requests extends Controller {
         String pFName = "Rebeca";
         String pLName = "Otero";
         String statusType = "missed a medication dose";
-        sendEmail(recipient,rFName,rLName,pFName,pLName,statusType);
-        dispenserInformation.put("Containers",containerContent);
+//        sendEmail(recipient,rFName,rLName,pFName,pLName,statusType);
+        if (containerContent.size() != 0) {
+            dispenserInformation.put("Updated", true);
+            dispenserInformation.put("Containers", containerContent);
+        }
+        else {
+            dispenserInformation.put("Updated", false);
+        }
         return ok(dispenserInformation);
     }
 

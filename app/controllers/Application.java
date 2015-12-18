@@ -62,7 +62,7 @@ public class Application extends Controller {
         Long d_id = Long.parseLong(dID);
         Dispensor device = Dispensor.find.byId(d_id);
         if(device == null){
-            device = Dispensor.createNewDispensor(newUser,sTime,eTime);
+            device = Dispensor.createNewDispensor(newUser,sTime,eTime, Long.parseLong(dID));
         }
 
         flash("success", "Welcome new user " + newUser.Fname);

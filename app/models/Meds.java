@@ -35,6 +35,8 @@ public class Meds extends Model{
 
     public Long frequency;
 
+    public Boolean updated;
+
     @OneToOne
     public Containers storedIn;
 
@@ -53,6 +55,7 @@ public class Meds extends Model{
         med.perMnth =month;
         med.dailyTime = daily;
         med.storedIn = stored;
+        med.updated = true;
         return med;
     }
 

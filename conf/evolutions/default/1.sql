@@ -23,6 +23,7 @@ create table containers (
 
 create table dispensor (
   id                        bigserial not null,
+  dispenser                 bigint,
   owner_id                  bigint,
   start_time                timestamp,
   end_time                  timestamp,
@@ -39,6 +40,7 @@ create table meds (
   per_wk                    bigint,
   per_mnth                  bigint,
   frequency                 bigint,
+  updated                   boolean,
   stored_in_id              bigint,
   constraint uq_meds_stored_in_id unique (stored_in_id),
   constraint pk_meds primary key (id))
