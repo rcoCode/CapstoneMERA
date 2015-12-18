@@ -11,7 +11,9 @@ libraryDependencies ++= Seq(
   cache,
   javaWs,
   "org.postgresql" % "postgresql" % "9.4-1201-jdbc41",
-  "org.mindrot" % "jbcrypt" % "0.3m"
+  "org.mindrot" % "jbcrypt" % "0.3m",
+  "com.typesafe.play" %% "play-mailer" % "3.0.1"
+
 )
 
 libraryDependencies += "org.webjars" % "bootstrap" % "3.3.5"

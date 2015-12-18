@@ -12,8 +12,16 @@ import play.mvc.Result;
 import com.fasterxml.jackson.databind.JsonNode;
 import controllers.Meds;
 import scala.util.parsing.json.JSONObject$;
+import org.apache.commons.mail.EmailAttachment;
+import play.Play;
+import play.api.libs.mailer.MailerClient;
+import play.libs.mailer.Email;
+import play.mvc.Controller;
+import play.mvc.Result;
 
+import javax.inject.Inject;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -56,7 +64,29 @@ public class Requests extends Controller {
                 }
             }
         }
+        String recipient = "garnelo.anahi@gmail.com";
+        String rFName = "Anahi";
+        String rLName = "Garnelo";
+        String pFName = "Rebeca";
+        String pLName = "Otero";
+        String statusType = "missed a medication dose";
+        sendEmail(recipient,rFName,rLName,pFName,pLName,statusType);
         dispenserInformation.put("Containers",containerContent);
         return ok(dispenserInformation);
     }
+
+    @Inject MailerClient mailerClient;
+
+    public void sendEmail(String recipient, String rFName, String rLName, String pFName, String pLName, String statusType) {
+        String notification = "MERA Pill Dispenser Notifications";
+        Email email = new Email();
+        email.setSubject(notification);
+        email.setFrom("MERA Pill Dispenser Notifications <merapd11852@gmail.com>");
+        email.addTo(rFName + " " + rLName + " TO <" + recipient + ">");
+        email.setBodyHtml("<html><body><p><b>"+ "MERA Pill Dispenser Notifications"+ "</b></p><p>Hello "+rFName+" "+ rLName+",</p><p>"+"This is a notification regarding: <b>" + pFName + " " + pLName +
+        "</b>, this person "+ statusType + " on " + Calendar.getInstance().getTime()+"<p>Kind Regards,<p>MERA: Mike | Emily | Rebeca | Anahi</p></p></body></html>");
+        mailerClient.send(email);
+    }
 }
+
+//https://github.com/playframework/play-mailer
