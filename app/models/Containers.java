@@ -32,7 +32,7 @@ public class Containers extends Model{
     @Column(unique = true)
     public Long container;
 
-    @OneToMany(mappedBy = "container")
+    @OneToMany(mappedBy = "regards")
     public List<Log> myLog;
 
     public static Finder<Long,Containers> find=new Finder<Long, Containers>(Containers.class);
