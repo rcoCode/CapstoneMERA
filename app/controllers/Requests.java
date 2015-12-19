@@ -9,6 +9,9 @@ import models.*;
 import models.Users;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import play.api.libs.json.JsValue;
 import play.data.Form;
 import play.libs.Json;
@@ -133,6 +136,9 @@ public class Requests extends Controller {
             return badRequest("Expecting Json Data");
         }
         else {
+            String example = "12/20/2015 08:45 PM";
+            DateTimeFormatter format = DateTimeFormat.forPattern("MM/dd/yyy hh:mm aa");
+            DateTime result = format.parseDateTime(example);
 
 
         }
