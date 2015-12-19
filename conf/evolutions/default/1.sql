@@ -33,6 +33,15 @@ create table dispensor (
   constraint pk_dispensor primary key (id))
 ;
 
+create table log (
+  id                        bigserial not null,
+  schedule_time             timestamp,
+  message                   varchar(255),
+  regards_id                bigint,
+  own_id                    bigint,
+  constraint pk_log primary key (id))
+;
+
 create table meds (
   id                        bigserial not null,
   name                      varchar(255),
@@ -71,8 +80,12 @@ alter table containers add constraint fk_containers_owner_2 foreign key (owner_i
 create index ix_containers_owner_2 on containers (owner_id);
 alter table dispensor add constraint fk_dispensor_owner_3 foreign key (owner_id) references Users (id);
 create index ix_dispensor_owner_3 on dispensor (owner_id);
-alter table meds add constraint fk_meds_storedIn_4 foreign key (stored_in_id) references containers (id);
-create index ix_meds_storedIn_4 on meds (stored_in_id);
+alter table log add constraint fk_log_regards_4 foreign key (regards_id) references containers (id);
+create index ix_log_regards_4 on log (regards_id);
+alter table log add constraint fk_log_own_5 foreign key (own_id) references Users (id);
+create index ix_log_own_5 on log (own_id);
+alter table meds add constraint fk_meds_storedIn_6 foreign key (stored_in_id) references containers (id);
+create index ix_meds_storedIn_6 on meds (stored_in_id);
 
 
 
@@ -89,6 +102,8 @@ drop table if exists contact_Users cascade;
 drop table if exists containers cascade;
 
 drop table if exists dispensor cascade;
+
+drop table if exists log cascade;
 
 drop table if exists meds cascade;
 

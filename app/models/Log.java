@@ -4,12 +4,14 @@ import com.avaje.ebean.Model;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 /**
  * Created by rebeca on 12/19/2015.
  */
+@Entity
 public class Log extends Model{
     @Id
     public Long id;
@@ -19,10 +21,10 @@ public class Log extends Model{
     public String message;
 
     @ManyToOne
-    public Containers container;
+    public Containers regards;
 
     @ManyToOne
-    public Users owner;
+    public Users own;
 
     public static Finder<Long,Log> find= new Finder<Long, Log>(Log.class);
 

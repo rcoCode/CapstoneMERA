@@ -13,7 +13,12 @@ import play.mvc.Security;
  */
 public class contacts extends Controller{
     @Security.Authenticated(UserAuth.class)
-    public Result index(){
+    public Result index(Long id){
+        Long u_id = Long.parseLong(session().get("user_id"));
+        if(u_id != id){
+            flash("error","You do not have access to this page");
+            return redirect(routes.Users.index(u_id));
+        }
         return ok(views.html.Contact.index.render(""));
     }
 
