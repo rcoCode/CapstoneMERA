@@ -19,7 +19,6 @@ public class container extends Controller{
     @Security.Authenticated(UserAuth.class)
     public Result index(Long id){
         Long u_id = Long.parseLong(session().get("user_id"));
-//        Containers editing = Containers.find.where().eq("container",id).findUnique();
         Containers editing = Containers.find.byId(id);
         if (editing == null){
             flash("error","Error displaying page");
@@ -35,8 +34,6 @@ public class container extends Controller{
     @Security.Authenticated(UserAuth.class)
     public Result edit(Long id){
         Long u_id = Long.parseLong(session().get("user_id"));
-        //*****//
-//        Containers editing = Containers.find.where().eq("container",id).findUnique();
         Containers editing = Containers.find.byId(id);
         if (editing == null){
             flash("error","Error displaying page");
@@ -105,9 +102,6 @@ public class container extends Controller{
     @Security.Authenticated(UserAuth.class)
     public Result removeMed(Long id){
         Long u_id = Long.parseLong(session().get("user_id"));
-        //*****//
-//        Containers edit = Containers.find.where().eq("container",id).findUnique();
-
         Containers edit = Containers.find.byId(id);
         if (u_id != edit.owner.id){
             flash("error","You cannot perform this action!");

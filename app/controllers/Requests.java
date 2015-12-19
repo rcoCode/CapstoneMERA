@@ -101,40 +101,44 @@ public class Requests extends Controller {
         JsonNode json = request().body().asJson();
         if(json == null) {
             return badRequest("Expecting Json data");
-        } else {
-            System.out.print("POST RECEIVED\n\n");
+        }
+        else {
+//            System.out.print("POST RECEIVED\n\n");
             String dID = json.get("Dispenser ID").toString();
             Dispensor device = Dispensor.find.where().eq("dispenser", Long.parseLong(dID)).findUnique();
             for (int i=0; i<json.get("Containers").size();i++) {
                 Long containerID = Long.parseLong(json.get("Containers").get(i).get("Container ID").toString());
                 Boolean availability = Boolean.valueOf(json.get("Containers").get(i).get("Available").toString());
                 if (availability == true) {
-//                    System.out.print("AVAILABLE CONTAINERS\n");
-//                    System.out.print(json.get("Containers").get(i).get("Container ID").toString() + "\n\n");
                     models.Containers container = Containers.find.where().eq("container", containerID).findUnique();
                     if (container==null) {
-                        System.out.print("NEW CONTAINER\n");
+//                        System.out.print("NEW CONTAINER\n");
                         Containers.createContainer(device,containerID);
                     }
-                    else { //It already exist... Container must be emptied to make it available
-                        System.out.print("containerID "+ containerID+'\n');
-                        System.out.print("UPDATE CONTAINER\n");
+                    else {
+//                        System.out.print("containerID "+ containerID+'\n');
+//                        System.out.print("UPDATE CONTAINER\n");
                         Containers.emptyContainer(device, containerID);
                     }
                 }
-                else {
-
-                }
             }
+        }
+        return redirect("/");
+    }
+
+    @BodyParser.Of(BodyParser.TolerantJson.class)
+    public Result logActions () {
+        JsonNode json = request().body().asJson();
+        if (json==null){
+            return badRequest("Expecting Json Data");
+        }
+        else {
+
+
         }
 
         return redirect("/");
     }
-
-//    @BodyParser.Of(BodyParser.TolerantJson.class)
-//    public Result logActions () {
-//
-//    }
 
 
     @Inject MailerClient mailerClient;

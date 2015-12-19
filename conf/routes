@@ -26,7 +26,7 @@ POST    /con/empty/:id              controllers.container.removeMed(id:Long)
 GET     /dispenser                       controllers.Requests.dispenserData(id: Long?= 0)
 
 POST    /containers                 controllers.Requests.containerInfo()
-#POST    /logs                       controllers.Requests.logActions()
+POST    /logs                       controllers.Requests.logActions()
 
 
 # Map static resources from the /public folder to the /assets URL path
