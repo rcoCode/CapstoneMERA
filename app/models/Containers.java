@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import play.data.validation.Constraints;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -27,6 +28,8 @@ public class Containers extends Model{
 
     public Long pillCount;
 
+    @Constraints.Required
+    @Column(unique = true)
     public Long container;
 
     public static Finder<Long,Containers> find=new Finder<Long, Containers>(Containers.class);
@@ -40,7 +43,7 @@ public class Containers extends Model{
     }
 
     public static Containers createContainer(Dispensor device, Long storedIn) {
-        System.out.print("Creating Container\n");
+//        System.out.print("Creating Container\n");
         Containers container = new Containers();
         container.device = device;
         container.owner = device.owner;
@@ -56,7 +59,8 @@ public class Containers extends Model{
         System.out.print("Emptying Container: " + container.container + "\n");
         System.out.print(container.empty + "\n");
         container.empty = true;
-//        container.medication.delete();
+        //Remove Medication Function Needs to be CALLED
+//        container.medication = null;
         container.pillCount = (long) 0;
         container.save();
     }

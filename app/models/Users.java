@@ -29,6 +29,7 @@ public class Users extends Model{
 
     public String password_hash;
 
+    public String useless;
 
     public static Finder<Long, Users> find=new Finder<Long, Users>(Users.class);
 

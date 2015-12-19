@@ -19,6 +19,7 @@ create table containers (
   owner_id                  bigint,
   pill_count                bigint,
   container                 bigint,
+  constraint uq_containers_container unique (container),
   constraint pk_containers primary key (id))
 ;
 
@@ -51,6 +52,7 @@ create table Users (
   id                        bigserial not null,
   username                  varchar(255),
   password_hash             varchar(255),
+  useless                   varchar(255),
   fname                     varchar(255),
   lname                     varchar(255),
   constraint uq_Users_username unique (username),

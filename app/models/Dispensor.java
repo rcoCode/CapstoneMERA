@@ -23,7 +23,6 @@ public class Dispensor extends Model{
     public static Finder<Long, Dispensor> find=new Finder<Long, Dispensor>(Dispensor.class);
 
     public static Dispensor createNewDispensor(Users user, DateTime operationStartTime, DateTime operationEndTime, Long dispenser) {
-
         if (user == null) {
             return null;
         }
