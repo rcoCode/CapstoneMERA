@@ -75,4 +75,7 @@ public class Users extends Model{
     @OneToMany(mappedBy = "owner")
     public List<Containers> myMeds;
 
+    @OneToMany(mappedBy = "owner")
+    public List<Log> myLogs;
+
 }

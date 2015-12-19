@@ -20,6 +20,11 @@ GET     /con/:id                    controllers.container.index(id:Long)
 POST    /con/:id                    controllers.container.edit(id:Long)
 POST    /con/empty/:id              controllers.container.removeMed(id:Long)
 
+GET     /log/:id                    controllers.logs.index(id:Long)
+
+GET     /cont/:id                   controllers.contacts.index(id:Long)
+POST    /cont/:id                   controllers.contacts.create(id:Long)
+POST    /cont/del/:id               controllers.contacts.removeCont(id:Long)
 
 #Anahi: The stuff I am messing around with
 #GET     /data/:id                       controllers.Requests.userData(id)

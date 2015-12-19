@@ -28,4 +28,6 @@ public class Contact extends Model{
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     public List<Users> caredFor;
 
+    public static Finder<Long,Contact> find = new Finder<Long, Contact>(Contact.class);
+
 }

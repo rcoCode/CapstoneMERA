@@ -2,24 +2,35 @@
 
 @main("MERA Dispenser") {
 
-
-
-<h1>Login Form</h1>
-<form class="form-horizontal" action="@routes.Application.login()" method="post">
-    <div class="form-group">
-        <label class="control-label col-sm-2" for="username">Username</label>
-        <div class="col-sm-10">
-            <input type="text" name="username" class="form-control input-lg">
+<div class="container">
+    <div class="container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <img src="@routes.Assets.versioned("images/nammerGray.png")" class="img-responsive">
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        <label class="control-label col-sm-2" for="password">Password</label>
-        <div class="col-sm-10">
-            <input type="password" name="password" class="form-control input-lg">
+        <br>
+    @if(session().get("user_id")==null){
+    <h1>Login Form</h1>
+    <form class="form-horizontal" action="@routes.Application.login()" method="post">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="username">Username</label>
+            <div class="col-sm-10">
+                <input type="text" name="username" class="form-control input-lg">
+            </div>
         </div>
-    </div>
 
-    <button class="btn btn-default btn-lg">Login</button>
-</form>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="password">Password</label>
+            <div class="col-sm-10">
+                <input type="password" name="password" class="form-control input-lg">
+            </div>
+        </div>
+
+        <button class="btn btn-default btn-lg">Login</button>
+    </form>
+    }
+</div>
+
 }
