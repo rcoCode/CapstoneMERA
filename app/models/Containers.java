@@ -4,6 +4,7 @@ import com.avaje.ebean.Model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by rebeca on 12/3/2015.
@@ -26,6 +27,7 @@ public class Containers extends Model{
 
     public Long pillCount;
 
+    public Long container;
 
     public static Finder<Long,Containers> find=new Finder<Long, Containers>(Containers.class);
 
@@ -37,11 +39,35 @@ public class Containers extends Model{
         container.save();
     }
 
-    public static Containers createContainer(Dispensor device) {
+    public static Containers createContainer(Dispensor device, Long storedIn) {
+        System.out.print("Creating Container\n");
         Containers container = new Containers();
         container.device = device;
         container.owner = device.owner;
         container.empty=true;
+        container.container = storedIn;
+//        System.out.print(container.container);
+        container.save();
         return container;
+    }
+
+    public static void emptyContainer (Dispensor device, Long storedIn) {
+        Containers container = Containers.find.where().eq("device",device).eq("container",storedIn).findUnique();
+        System.out.print("Emptying Container: " + container.container + "\n");
+        System.out.print(container.empty + "\n");
+        container.empty = true;
+//        container.medication.delete();
+        container.pillCount = (long) 0;
+        container.save();
+    }
+
+    public static void showAll(Dispensor device) {
+        List<Containers> containers = Containers.find.where().eq("device",device).findList();
+        for (int i=0; i<containers.size();i++) {
+            System.out.print("\n"+i+" "+containers.get(i).container+"\n");
+            System.out.print(containers.get(i).empty+"\n");
+            System.out.print(containers.get(i).id+"\n\n");
+        }
+
     }
 }

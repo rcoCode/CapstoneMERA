@@ -18,6 +18,7 @@ create table containers (
   empty                     boolean,
   owner_id                  bigint,
   pill_count                bigint,
+  container                 bigint,
   constraint pk_containers primary key (id))
 ;
 

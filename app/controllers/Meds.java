@@ -65,7 +65,9 @@ public class Meds extends Controller{
         Long pillCount=Long.parseLong(pills,10);
         Long c_id = Long.parseLong(contain,10);
 
+        //*****//
         Containers holding = Containers.find.byId(c_id);
+
         if (u_id != holding.owner.id){
             flash("error","You cannot perform this action");
             return redirect(routes.Users.index(Long.parseLong(session().get("user_id"))));

@@ -1,10 +1,16 @@
 package controllers;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.net.HttpHeaders;
 import jdk.nashorn.internal.ir.LiteralNode;
 import models.*;
 import models.Users;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import play.api.libs.json.JsValue;
+import play.data.Form;
 import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
@@ -24,7 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
+import play.data.DynamicForm;
 
 
 /**
@@ -52,7 +58,7 @@ public class Requests extends Controller {
 //                            container.updated = false;
                             if (container.medication!=null && container.medication.updated==true) {
                                 ObjectNode containerInformation = Json.newObject();
-                                containerInformation.put("Container ID", container.id);
+                                containerInformation.put("Container ID", container.container);
                                 containerInformation.put("Pill Count", container.pillCount);
 //                                containerInformation.put("Updated", container.medication.updated);
                                 container.medication.updated = false;
@@ -68,6 +74,11 @@ public class Requests extends Controller {
                 }
             }
         }
+
+        else {
+            //Here is the redirect if not valid id
+        }
+
         String recipient = "garnelo.anahi@gmail.com";
         String rFName = "Anahi";
         String rLName = "Garnelo";
@@ -85,6 +96,42 @@ public class Requests extends Controller {
         return ok(dispenserInformation);
     }
 
+    @BodyParser.Of(BodyParser.TolerantJson.class)
+    public Result containerInfo() {
+        JsonNode json = request().body().asJson();
+        if(json == null) {
+            return badRequest("Expecting Json data");
+        } else {
+            System.out.print("POST RECEIVED\n");
+            String dID = json.get("Dispenser ID").toString();
+            Dispensor device = Dispensor.find.where().eq("dispenser", Long.parseLong(dID)).findUnique();
+            for (int i=0; i<json.get("Containers").size();i++) {
+                Long containerID = Long.parseLong(json.get("Containers").get(i).get("Container ID").toString());
+                System.out.print("containerID "+ containerID+'\n');
+                Boolean availability = Boolean.valueOf(json.get("Containers").get(i).get("Available").toString());
+                if (availability == true) {
+                    System.out.print("AVAILABLE CONTAINERS\n");
+                    System.out.print(json.get("Containers").get(i).get("Container ID").toString() + "\n\n");
+                    models.Containers container = Containers.find.where().eq("container", containerID).findUnique();
+                    if (container==null) {
+                        System.out.print("NEW CONTAINER\n");
+                        Containers.createContainer(device,containerID);
+                    }
+                    else { //It already exist... Container must be emptied to make it available
+                        System.out.print("UPDATE CONTAINER\n");
+                        Containers.emptyContainer(device,containerID);
+                    }
+                }
+                else {
+                    //Nothing
+                }
+            }
+            models.Containers.showAll(device);
+        }
+
+
+        return redirect("/");
+    }
     @Inject MailerClient mailerClient;
 
     public void sendEmail(String recipient, String rFName, String rLName, String pFName, String pLName, String statusType) {

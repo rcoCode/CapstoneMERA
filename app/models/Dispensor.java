@@ -33,10 +33,6 @@ public class Dispensor extends Model{
         device.endTime = operationEndTime;
         device.dispenser = dispenser;
         device.save();
-
-        Containers one = Containers.createContainer(device);
-        one.save();
-
         return device;
     }
 
