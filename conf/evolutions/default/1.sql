@@ -9,6 +9,7 @@ create table contact (
   l_name                    varchar(255),
   email                     varchar(255),
   phone                     varchar(255),
+  constraint uq_contact_email unique (email),
   constraint pk_contact primary key (id))
 ;
 

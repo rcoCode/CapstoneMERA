@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Contact;
 import models.Containers;
 import play.mvc.Controller;
 import play.mvc.*;
@@ -22,7 +23,8 @@ public class Users extends Controller{
         }
         models.Users logged = models.Users.find.byId(u_id);
         List<Containers> mymeds = logged.myMeds;
-        return ok(views.html.Users.index.render(mymeds));
+        List<Contact> carers = logged.contacts;
+        return ok(views.html.Users.index.render(mymeds,carers));
     }
 
 }

@@ -2,7 +2,7 @@
 
 @main(""){
 <div class="container">
-    <form action='@routes.contacts.create(Long.parseLong(session().get("user_id")))' class="form-horizontal" method="post">
+    <form action='@routes.contacts.createCont(Long.parseLong(session().get("user_id")))' class="form-horizontal" method="post">
         <div class="form-group">
             <label class="control-label col-sm-2" for="fname">First Name:</label>
             <div class="col-sm-10">
