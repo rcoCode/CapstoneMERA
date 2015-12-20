@@ -148,11 +148,12 @@ public class Requests extends Controller {
             DateTime today = format.parseDateTime(date);
             if (warnings !=null) {
                 if (warnings.size()!=0) {
-                    sendEmail("Warnings",user,warnings,date);
+                    sendEmail("Warnings",user,warnings,date,device);
                 }
                 for (int i=0; i<warnings.size();i++) {
                     Long containerID = Long.parseLong(warnings.get(i).get("Container ID").toString());
                     Containers container = Containers.find.where().eq("device",device).eq("container",containerID).findUnique();
+                    String medication = container.medication.name;
                     String message = warnings.get(i).get("Message").toString();
                     String sTime = warnings.get(i).get("Scheduled Time").textValue();
                     String eTime = warnings.get(i).get("Event Time Stamp").textValue();
@@ -163,7 +164,7 @@ public class Requests extends Controller {
             }
             if (errors !=null) {
                 if (errors.size()!=0) {
-                    sendEmail("Errors",user,errors,date);
+                    sendEmail("Errors",user,errors,date,device);
                 }
                 for (int i=0; i<errors.size();i++) {
                     Long containerID = Long.parseLong(errors.get(i).get("Container ID").toString());
@@ -194,7 +195,7 @@ public class Requests extends Controller {
 
     //https://github.com/playframework/play-mailer
     @Inject MailerClient mailerClient;
-    public void sendEmail(String statusType, Users user, JsonNode statusMessage, String today) {
+    public void sendEmail(String statusType, Users user, JsonNode statusMessage, String today, Dispensor device) {
         String notification = "MERA Pill Dispenser";
         String pFName = user.Fname;
         String pLName = user.Lname;
@@ -203,19 +204,28 @@ public class Requests extends Controller {
 //        DateFormat formatter = new SimpleDateFormat("EEEE, dd MMMM yyyy");
 //        String today = date.toString("dd MMMM yyyy");
         DateTimeFormatter format = DateTimeFormat.forPattern("MM/dd/yyy hh:mm aa");
-        String logMessage = "<blockquote>";
+        String logMessage = "<table style=\"width:100%\">";
+        logMessage+="<caption>"+statusType+"</caption>";
+        logMessage+="<tr><td>Container ID</td>";
+        logMessage+="<td>Medication</td>";
+        logMessage+="<td>Message</td>";
+        logMessage+="<td>Scheduled Time</td>";
+        logMessage+="<td>Logged Event Time</td></tr>";
         for (int j = 0; j < statusMessage.size(); j++) {
+            logMessage+="<tr>";
             Long containerID = Long.parseLong(statusMessage.get(j).get("Container ID").toString());
+            Containers container = Containers.find.where().eq("device",device).eq("container",containerID).findUnique();
             String message = statusMessage.get(j).get("Message").textValue();
             String sTime = statusMessage.get(j).get("Scheduled Time").textValue();
             String eTime = statusMessage.get(j).get("Event Time Stamp").textValue();
-            logMessage += "Container ID:              " + containerID + "<br>";
-            logMessage += "Message:                   " + message + "<br>";
-            logMessage += "Scheduled Time:            " + sTime + "<br>";
-            logMessage += "Logged Event Record Time:  " + eTime + "<br><br>";
+            logMessage += "<td>" + containerID + "</td>";
+            logMessage += "<td>" + container.medication.name + "</td>";
+            logMessage += "<td>" + message + "</td>";
+            logMessage += "<td>" + sTime + "</td>";
+            logMessage += "<td>" + eTime + "</td>";
+            logMessage+="</tr>";
         }
-        logMessage += "</blockquote>";
-
+        logMessage += "</table>";
         String bodyMessage = "<br>This is a notification regarding: <b>";
         String person = pFName + " " + pLName +"</b>.<br>";
         String following = "The following ";
@@ -225,12 +235,15 @@ public class Requests extends Controller {
             String rFName = recipients.get(i).fName;
             String rLName = recipients.get(i).lName;
             String rEmail = recipients.get(i).email;
+//            rFName = "Emily";
+//            rLName = "Lee";
+//            rEmail = "amily52131@aol.com";
             String greeting = "<p>Hello " +  rFName + " " + rLName + ",";
             Email email = new Email();
             email.setSubject(notification);
             email.setFrom("MERA Pill Dispenser <merapd11852@gmail.com>");
             email.addTo(rFName + " " + rLName + " TO <" + rEmail + ">");
-            email.setBodyHtml("<html><body><p><b>" + notification + " " + statusType + "</b></p>" + greeting + bodyMessage + person + "</p>" + following + statusType.toLowerCase() + encountered + today + ".<br></p>" + logMessage + closing + "</body></html>");
+            email.setBodyHtml("<html><body><p><b>" + notification + " " + statusType + "</b></p>" + greeting + bodyMessage + person + following + statusType.toLowerCase() + encountered + today + ".<br></p>" + logMessage + closing + "</body></html>");
             mailerClient.send(email);
         }
     }
