@@ -30,7 +30,8 @@ public class Users extends Model{
 
     public String password_hash;
 
-    public static Finder<Long, Users> find=new Finder<Long, Users>(Users.class);
+    public static Model.Finder<Long, Users> find=new Model.Finder<Long, Users>(Users.class);
+
 
     public boolean authenticate(String password) {
         return BCrypt.checkpw(password, this.password_hash);
@@ -58,14 +59,6 @@ public class Users extends Model{
         User.Lname= lName;
         User.save();
 
-        //CONTACT FOR TESTING
-        Contact contact = new Contact();
-        contact.email = "garnelo.anahi@gmail.com";
-        contact.fName = "Rebeca";
-        contact.lName = "Otero";
-        contact.save();
-        User.contacts.add(contact);
-        User.save();
         return User;
     }
 
@@ -86,3 +79,7 @@ public class Users extends Model{
     public List<Log> myLogs;
 
 }
+
+
+
+

@@ -23,7 +23,7 @@ public class contacts extends Controller{
     }
 
     @Security.Authenticated(UserAuth.class)
-    public Result create(Long id){
+    public Result createCont(Long id){
         Long u_id = Long.parseLong(session().get("user_id"));
         if(u_id != id){
             flash("error","You do not have access to this page");
@@ -36,6 +36,13 @@ public class contacts extends Controller{
         Users care = Users.find.byId(u_id);
         if (fname.isEmpty() || lname.isEmpty() || email.isEmpty()){
             flash("error","All fields are required");
+            return redirect(routes.Users.index(u_id));
+        }
+        Contact check = Contact.find.where().eq("email",email).findUnique();
+        if(check != null){
+            check.caredFor.add(care);
+            check.save();
+            flash("success","New contact added");
             return redirect(routes.Users.index(u_id));
         }
 

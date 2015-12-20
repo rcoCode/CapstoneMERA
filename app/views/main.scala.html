@@ -14,7 +14,7 @@
             min-height:100%;
             }
             body{
-            padding-top:50px;
+            padding-top:55px;
             background-image:url("@routes.Assets.versioned("images/patternV75.png")");
             min-height:100%;
             }
@@ -32,14 +32,38 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                @if(session().get("user_id") == null){
                 <a class="navbar-brand topnav" href="@routes.Application.index()">MERA Dispenser </a>
+                }   else{
+                <a class="navbar-brand topnav" href="#">MERA Dispenser </a>
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href='@routes.Users.index(Long.parseLong(session().get("user_id")))'>
+                            <span class="glyphicon glyphicon-home"></span>
+                            <em>@models.Users.find.where().eq("id", Long.parseLong(session().get("user_id"))).findUnique().username</em>
+                        </a>
+                    </li>
+                    <li>
+                        <a href='@routes.logs.index(Long.parseLong(session().get("user_id")))'>
+                            <span class="glyphicon glyphicon-paperclip"></span>
+                            Medications Log
+                        </a>
+                    </li>
+                </ul>
+                }
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
+                    @if(session().get("user_id") == null){
                     <li>
                         <a href=@routes.Application.signup() method="get"><span class="glyphicon glyphicon-user"></span>Sign Up</a>
                     </li>
+                    }   else{
+                    <li>
+                    <li><a href="@routes.Application.logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    </li>
+                    }
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -64,3 +88,7 @@
         <script src="lib/bootstrap/js/bootstrap.js"></script>
     </body>
 </html>
+
+
+
+

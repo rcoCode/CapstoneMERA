@@ -1,4 +1,8 @@
-@(contain:List[Containers])
+@(contain:List[Containers],daylist:Map[String,Boolean])
+
+@import play.libs.Scala
+@import helper._
+@import b3.checkbox
 
 @main("Medications") {
 <h2>New Medication</h2>
@@ -41,7 +45,7 @@
     <div class="form-group">
         <label class="control-label col-sm-2" for="week">Days per week medication needed</label>
         <div class="col-sm-10">
-            <input type="text" name="week" class="form-control input-lg">
+            @@b3.checkbox(Meds("days"), label="Days", checkboxMap=daylist)
         </div>
     </div>
 
