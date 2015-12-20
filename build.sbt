@@ -15,7 +15,7 @@ libraryDependencies ++= Seq(
   javaWs,
   "org.postgresql" % "postgresql" % "9.4-1201-jdbc41",
   "org.mindrot" % "jbcrypt" % "0.3m",
-  "com.typesafe.play" %% "play-mailer" % "3.0.1" )
+  "com.typesafe.play" %% "play-mailer" % "3.0.1" ,
   "com.adrianhurt" %% "play-bootstrap3" % "0.4.5-P24"
 )
 
