@@ -18,8 +18,9 @@ public class Log extends Model{
 
     public DateTime scheduleTime;
 
-    public DateTime eventTime;
+    public DateTime loggedTime;
 
+    public String statusType;
 
     public String message;
 
@@ -37,13 +38,14 @@ public class Log extends Model{
         return time;
     }
 
-    public static Log createNewLog(DateTime scheduleTime, DateTime timeStamp, String message, Containers container, Users user) {
+    public static Log createNewLog(DateTime scheduleTime, DateTime timeStamp, String message, Containers container, Users user, String statusType) {
         Log log = new Log();
         log.message = message;
         log.own = user;
         log.scheduleTime = scheduleTime;
-        log.eventTime = timeStamp;
+        log.loggedTime = timeStamp;
         log.regards = container;
+        log.statusType = statusType;
         log.save();
         return log;
     }

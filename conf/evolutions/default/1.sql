@@ -36,7 +36,8 @@ create table dispensor (
 create table log (
   id                        bigserial not null,
   schedule_time             timestamp,
-  event_time                timestamp,
+  logged_time               timestamp,
+  status_type               varchar(255),
   message                   varchar(255),
   regards_id                bigint,
   own_id                    bigint,

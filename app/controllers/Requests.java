@@ -159,7 +159,7 @@ public class Requests extends Controller {
                     String eTime = warnings.get(i).get("Event Time Stamp").textValue();
                     DateTime scheduledTime = format.parseDateTime(sTime);
                     DateTime eventTime = format.parseDateTime(eTime);
-                    Log.createNewLog(scheduledTime, eventTime, message,container, user);
+                    Log.createNewLog(scheduledTime, eventTime, message,container, user, "Warning");
                 }
             }
             if (errors !=null) {
@@ -174,7 +174,7 @@ public class Requests extends Controller {
                     String eTime = errors.get(i).get("Event Time Stamp").textValue();
                     DateTime scheduledTime = format.parseDateTime(sTime);
                     DateTime eventTime = format.parseDateTime(eTime);
-                    Log.createNewLog(scheduledTime, eventTime, message,container, user);
+                    Log.createNewLog(scheduledTime, eventTime, message,container, user, "Error");
                 }
             }
             if (successes !=null) {
@@ -186,7 +186,7 @@ public class Requests extends Controller {
                     String eTime = successes.get(i).get("Event Time Stamp").textValue();
                     DateTime scheduledTime = format.parseDateTime(sTime);
                     DateTime eventTime = format.parseDateTime(eTime);
-                    Log.createNewLog(scheduledTime, eventTime, message,container, user);
+                    Log.createNewLog(scheduledTime, eventTime, message,container, user, "Success");
                 }
             }
         }
@@ -217,7 +217,7 @@ public class Requests extends Controller {
             Containers container = Containers.find.where().eq("device",device).eq("container",containerID).findUnique();
             String message = statusMessage.get(j).get("Message").textValue();
             String sTime = statusMessage.get(j).get("Scheduled Time").textValue();
-            String eTime = statusMessage.get(j).get("Event Time Stamp").textValue();
+            String eTime = statusMessage.get(j).get("Logged Time").textValue();
             logMessage += "<td>" + containerID + "</td>";
             logMessage += "<td>" + container.medication.name + "</td>";
             logMessage += "<td>" + message + "</td>";
