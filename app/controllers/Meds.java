@@ -62,10 +62,6 @@ public class Meds extends Controller{
             flash("error","All fields must be filled");
             return redirect(routes.Users.index(u_id));
         }
-        if(mon.isEmpty()||tue.isEmpty()||wed.isEmpty()||thu.isEmpty()||fri.isEmpty()||sat.isEmpty()||sun.isEmpty()){
-            flash("error","All fields must be filled");
-            return redirect(routes.Users.index(u_id));
-        }
 
         //Convert formats
         DateTimeFormatter format = DateTimeFormat.forPattern("yyyy-MM-dd");
