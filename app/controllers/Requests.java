@@ -29,10 +29,13 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.inject.Inject;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 import play.data.DynamicForm;
 
 
@@ -115,12 +118,9 @@ public class Requests extends Controller {
                 if (availability == true) {
                     models.Containers container = Containers.find.where().eq("container", containerID).findUnique();
                     if (container==null) {
-//                        System.out.print("NEW CONTAINER\n");
                         Containers.createContainer(device,containerID);
                     }
                     else {
-//                        System.out.print("containerID "+ containerID+'\n');
-//                        System.out.print("UPDATE CONTAINER\n");
                         Containers.emptyContainer(device, containerID);
                     }
                 }
@@ -136,28 +136,103 @@ public class Requests extends Controller {
             return badRequest("Expecting Json Data");
         }
         else {
-            String example = "12/20/2015 08:45 PM";
             DateTimeFormatter format = DateTimeFormat.forPattern("MM/dd/yyy hh:mm aa");
-            DateTime result = format.parseDateTime(example);
-
-
+            Long dID = Long.parseLong(json.get("Dispenser ID").toString());
+            Dispensor device = Dispensor.find.where().eq("dispenser",dID).findUnique();
+            Long uID = device.owner.id;
+            models.Users user = Users.find.byId(uID);
+            JsonNode warnings = json.get("Warning");
+            JsonNode successes = json.get("Success");
+            JsonNode errors = json.get("Error");
+            String date = json.get("Time Stamp").textValue();
+            DateTime today = format.parseDateTime(date);
+            if (warnings !=null) {
+                if (warnings.size()!=0) {
+                    sendEmail("Warnings",user,warnings,date);
+                }
+                for (int i=0; i<warnings.size();i++) {
+                    Long containerID = Long.parseLong(warnings.get(i).get("Container ID").toString());
+                    Containers container = Containers.find.where().eq("device",device).eq("container",containerID).findUnique();
+                    String message = warnings.get(i).get("Message").toString();
+                    String sTime = warnings.get(i).get("Scheduled Time").textValue();
+                    String eTime = warnings.get(i).get("Event Time Stamp").textValue();
+                    DateTime scheduledTime = format.parseDateTime(sTime);
+                    DateTime eventTime = format.parseDateTime(eTime);
+                    Log.createNewLog(scheduledTime, eventTime, message,container, user);
+                }
+            }
+            if (errors !=null) {
+                if (errors.size()!=0) {
+                    sendEmail("Errors",user,errors,date);
+                }
+                for (int i=0; i<errors.size();i++) {
+                    Long containerID = Long.parseLong(errors.get(i).get("Container ID").toString());
+                    Containers container = Containers.find.where().eq("device",device).eq("container",containerID).findUnique();
+                    String message = errors.get(i).get("Message").toString();
+                    String sTime = errors.get(i).get("Scheduled Time").textValue();
+                    String eTime = errors.get(i).get("Event Time Stamp").textValue();
+                    DateTime scheduledTime = format.parseDateTime(sTime);
+                    DateTime eventTime = format.parseDateTime(eTime);
+                    Log.createNewLog(scheduledTime, eventTime, message,container, user);
+                }
+            }
+            if (successes !=null) {
+                for (int i=0; i<successes.size();i++) {
+                    Long containerID = Long.parseLong(successes.get(i).get("Container ID").toString());
+                    Containers container = Containers.find.where().eq("device",device).eq("container",containerID).findUnique();
+                    String message = successes.get(i).get("Message").toString();
+                    String sTime = successes.get(i).get("Scheduled Time").textValue();
+                    String eTime = successes.get(i).get("Event Time Stamp").textValue();
+                    DateTime scheduledTime = format.parseDateTime(sTime);
+                    DateTime eventTime = format.parseDateTime(eTime);
+                    Log.createNewLog(scheduledTime, eventTime, message,container, user);
+                }
+            }
         }
-
         return redirect("/");
     }
 
-
+    //https://github.com/playframework/play-mailer
     @Inject MailerClient mailerClient;
-    public void sendEmail(String recipient, String rFName, String rLName, String pFName, String pLName, String statusType) {
-        String notification = "MERA Pill Dispenser Notifications";
-        Email email = new Email();
-        email.setSubject(notification);
-        email.setFrom("MERA Pill Dispenser Notifications <merapd11852@gmail.com>");
-        email.addTo(rFName + " " + rLName + " TO <" + recipient + ">");
-        email.setBodyHtml("<html><body><p><b>"+ "MERA Pill Dispenser Notifications"+ "</b></p><p>Hello "+rFName+" "+ rLName+",</p><p>"+"This is a notification regarding: <b>" + pFName + " " + pLName +
-        "</b>, this person "+ statusType + " on " + Calendar.getInstance().getTime()+"<p>Kind Regards,<p>MERA: Mike | Emily | Rebeca | Anahi</p></p></body></html>");
-        mailerClient.send(email);
+    public void sendEmail(String statusType, Users user, JsonNode statusMessage, String today) {
+        String notification = "MERA Pill Dispenser";
+        String pFName = user.Fname;
+        String pLName = user.Lname;
+        List<Contact> recipients = user.contacts;
+//        Date date = Calendar.getInstance().getTime();
+//        DateFormat formatter = new SimpleDateFormat("EEEE, dd MMMM yyyy");
+//        String today = date.toString("dd MMMM yyyy");
+        DateTimeFormatter format = DateTimeFormat.forPattern("MM/dd/yyy hh:mm aa");
+        String logMessage = "<blockquote>";
+        for (int j = 0; j < statusMessage.size(); j++) {
+            Long containerID = Long.parseLong(statusMessage.get(j).get("Container ID").toString());
+            String message = statusMessage.get(j).get("Message").textValue();
+            String sTime = statusMessage.get(j).get("Scheduled Time").textValue();
+            String eTime = statusMessage.get(j).get("Event Time Stamp").textValue();
+            logMessage += "Container ID:              " + containerID + "<br>";
+            logMessage += "Message:                   " + message + "<br>";
+            logMessage += "Scheduled Time:            " + sTime + "<br>";
+            logMessage += "Logged Event Record Time:  " + eTime + "<br><br>";
+        }
+        logMessage += "</blockquote>";
+
+        String bodyMessage = "<br>This is a notification regarding: <b>";
+        String person = pFName + " " + pLName +"</b>.<br>";
+        String following = "The following ";
+        String encountered = " were encountered on ";
+        String closing = "<p>Kind Regards,<br>MERA: Mike | Emily | Rebeca | Anahi</p>";
+        for (int i = 0; i < recipients.size(); i++) {
+            String rFName = recipients.get(i).fName;
+            String rLName = recipients.get(i).lName;
+            String rEmail = recipients.get(i).email;
+            String greeting = "<p>Hello " +  rFName + " " + rLName + ",";
+            Email email = new Email();
+            email.setSubject(notification);
+            email.setFrom("MERA Pill Dispenser <merapd11852@gmail.com>");
+            email.addTo(rFName + " " + rLName + " TO <" + rEmail + ">");
+            email.setBodyHtml("<html><body><p><b>" + notification + " " + statusType + "</b></p>" + greeting + bodyMessage + person + "</p>" + following + statusType.toLowerCase() + encountered + today + ".<br></p>" + logMessage + closing + "</body></html>");
+            mailerClient.send(email);
+        }
     }
 }
 
-//https://github.com/playframework/play-mailer

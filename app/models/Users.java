@@ -8,6 +8,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import play.data.validation.Constraints;
 
 
+import javax.jws.soap.SOAPBinding;
 import javax.persistence.*;
 import javax.validation.Constraint;
 import java.util.Date;
@@ -28,8 +29,6 @@ public class Users extends Model{
     public String username;
 
     public String password_hash;
-
-    public String useless;
 
     public static Finder<Long, Users> find=new Finder<Long, Users>(Users.class);
 
@@ -59,6 +58,14 @@ public class Users extends Model{
         User.Lname= lName;
         User.save();
 
+        //CONTACT FOR TESTING
+        Contact contact = new Contact();
+        contact.email = "garnelo.anahi@gmail.com";
+        contact.fName = "Rebeca";
+        contact.lName = "Otero";
+        contact.save();
+        User.contacts.add(contact);
+        User.save();
         return User;
     }
 

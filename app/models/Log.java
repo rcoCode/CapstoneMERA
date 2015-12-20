@@ -18,6 +18,9 @@ public class Log extends Model{
 
     public DateTime scheduleTime;
 
+    public DateTime eventTime;
+
+
     public String message;
 
     @ManyToOne
@@ -32,5 +35,16 @@ public class Log extends Model{
         Log present = Log.find.byId(id);
         String time = present.scheduleTime.toString("hh:mm aa MM/dd/yyyy");
         return time;
+    }
+
+    public static Log createNewLog(DateTime scheduleTime, DateTime timeStamp, String message, Containers container, Users user) {
+        Log log = new Log();
+        log.message = message;
+        log.own = user;
+        log.scheduleTime = scheduleTime;
+        log.eventTime = timeStamp;
+        log.regards = container;
+        log.save();
+        return log;
     }
 }
