@@ -37,6 +37,8 @@ public class Meds extends Model{
 
     public Boolean updated;
 
+    public List<String> days;
+
     @OneToOne
     public Containers storedIn;
 

@@ -31,7 +31,7 @@ public class Users extends Model{
 
     public String useless;
 
-    public static Finder<Long, Users> find=new Finder<Long, Users>(Users.class);
+    public static Model.Finder<Long, Users> find=new Model.Finder<Long, Users>(Users.class);
 
     public boolean authenticate(String password) {
         return BCrypt.checkpw(password, this.password_hash);

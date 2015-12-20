@@ -1,9 +1,10 @@
-@(mymeds:List[Containers])
+@(mymeds:List[Containers],carers:List[Contact])
 
 @main("Profile") {
 <div class="container">
     <h1>My Medications</h1>
-    @if(mymeds.isEmpty){
+    <br>
+    @if(mymeds == null){
     <h3><em>No medications stored</em></h3>
     }   else{
     <ul>
@@ -15,9 +16,11 @@
             }
         }
     </ul>
+    <br>
     }
     <h1>Empty Containers</h1>
-    @if(mymeds.isEmpty){
+    <br>
+    @if(mymeds == null){
     <h3><em>No containers detected</em></h3>
     }   else{
     <ul>
@@ -32,6 +35,24 @@
                 <a href='@routes.Meds.index(Long.parseLong(session().get("user_id")))'><button class="btn btn-link btn-lg">Empty Container @m.id</button></a>
             </li>
             }
+        }
+    </ul>
+    <br>
+    }
+    <h1>My Contacts</h1>
+    <br>
+    <div class="pull-right">
+        <a href='@routes.contacts.index(Long.parseLong(session().get("user_id")))'><button class="btn btn-primary btn-lg">Add Contact</button></a>
+    </div>
+    @if(carers == null){
+    <h3><em>No contacts added</em></h3>
+    }   else{
+    <ul>
+        @for(c<-carers){
+        <li>
+            <h2>@c.fName @c.lName</h2>
+            <h4><em><b>Email:</b> @c.email</em></h4>
+        </li>
         }
     </ul>
     }

@@ -8,7 +8,8 @@ import org.joda.time.format.DateTimeFormatter;
 import play.data.Form;
 import play.mvc.*;
 import views.html.*;
-import java.util.List;
+
+import java.util.*;
 
 import static play.data.Form.form;
 
@@ -26,7 +27,15 @@ public class Meds extends Controller{
         Users logged = Users.find.byId(u_id);
         Dispensor device = logged.device;
         List<Containers> containers = logged.myMeds;
-        return ok(views.html.Meds.index.render(containers));
+        Map<String,Boolean> days = new HashMap<>();
+        days.put("Mon",false);
+        days.put("Tues",false);
+        days.put("Weds",false);
+        days.put("Thurs",false);
+        days.put("Fri",false);
+        days.put("Sat",false);
+        days.put("Sun",false);
+        return ok(views.html.Meds.index.render(containers,days));
     }
 
     @Security.Authenticated(UserAuth.class)
@@ -60,7 +69,6 @@ public class Meds extends Controller{
         DateTime timeDaily = hourFormat.parseDateTime(dailyTime);
         Long nDose=Long.parseLong(dosage,10);
         Long hFreq=Long.parseLong(freq,10);
-        Long nWeek=Long.parseLong(week,10);
         Long nMonth=Long.parseLong(month,10);
         Long pillCount=Long.parseLong(pills,10);
         Long c_id = Long.parseLong(contain,10);
@@ -72,14 +80,16 @@ public class Meds extends Controller{
             flash("error","You cannot perform this action");
             return redirect(routes.Users.index(Long.parseLong(session().get("user_id"))));
         }
+
         if (holding != null) {
             holding.save();
-            models.Meds nMed = models.Meds.createNewMed(med_name, nDose, startDate, timeDaily, hFreq, nWeek, nMonth, holding);
-            if (nMed.storedIn == null) {
-                flash("error", "No Container Could Be Found"); //Most likely error
-                return redirect(routes.Users.index(u_id));
-                //flash("error","Invalid Medication or No Container Could Be Found");
-            }
+            models.Meds nMed = medsForm.get();
+            nMed.name = med_name;
+            nMed.schedule = startDate;
+            nMed.dailyTime = timeDaily;
+            nMed.dose = nDose;
+            nMed.frequency = hFreq;
+            nMed.perMnth = nMonth;
             nMed.save();
             holding.medication = nMed;
             holding.pillCount = pillCount;

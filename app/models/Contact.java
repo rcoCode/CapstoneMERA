@@ -21,6 +21,7 @@ public class Contact extends Model{
     public String lName;
 
     @Constraints.Required
+    @Column(unique = true)
     public String email;
 
     public String phone;
