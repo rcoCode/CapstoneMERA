@@ -66,6 +66,7 @@ public class contacts extends Controller{
         }
         Users current = Users.find.byId(u_id);
         if(current.contacts.remove(contact)){
+            current.save();
             flash("success","Contact removed");
             return redirect(routes.Users.index(u_id));
         }

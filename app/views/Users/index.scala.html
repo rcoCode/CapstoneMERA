@@ -52,7 +52,7 @@
         <li>
             <h2>@c.fName @c.lName</h2>
             <h4><em><b>Email:</b> @c.email</em></h4>
-            <h5><em>Delete Contact</em></h5>
+            <h5><form action='@routes.contacts.removeCont(c.id)' method="post"><button class="btn btn-danger btn-sm"><em>Delete Contact</em></button> </form> </h5>
         </li>
         }
     </ul>
