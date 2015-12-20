@@ -67,7 +67,8 @@ public class Application extends Controller {
         Long d_id = Long.parseLong(dID);
         Dispensor device = Dispensor.find.byId(d_id);
         if(device == null){
-            device = Dispensor.createNewDispensor(newUser,sTime,eTime, Long.parseLong(dID));
+            flash("error","No device found");
+            return redirect(routes.Application.index());
         }
 
         flash("success", "Welcome new user " + newUser.Fname);
