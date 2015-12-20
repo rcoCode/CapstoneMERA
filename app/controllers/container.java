@@ -77,7 +77,7 @@ public class container extends Controller{
         if (editing.medication.name != med_name){
             Meds dMed = editing.medication;
             dMed.delete();
-            models.Meds nMed = models.Meds.createNewMed(med_name,nDose,startDate,timeDaily,hFreq,nWeek,nMonth,editing);
+            models.Meds nMed = models.Meds.createNewMed(med_name,nDose,startDate,timeDaily,hFreq,nMonth,editing);
             nMed.save();
             editing.medication =nMed;
             editing.save();
@@ -90,7 +90,6 @@ public class container extends Controller{
             changed.dailyTime = timeDaily;
             changed.schedule = startDate;
             changed.frequency = hFreq;
-            changed.perWk = nWeek;
             changed.perMnth = nMonth;
             changed.storedIn = editing;
             changed.save();

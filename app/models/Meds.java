@@ -42,8 +42,8 @@ public class Meds extends Model{
     @OneToOne
     public Containers storedIn;
 
-    public static Meds createNewMed(String medName,Long dosage,DateTime sched, DateTime daily,Long freq,Long week,Long month,Containers stored) {
-        if(medName == null || dosage==null || (week == null && month == null)) {
+    public static Meds createNewMed(String medName,Long dosage,DateTime sched, DateTime daily,Long freq,Long month,Containers stored) {
+        if(medName == null || dosage==null || month == null) {
             return null;
         }
         System.out.print("Creating Medication");
@@ -53,7 +53,6 @@ public class Meds extends Model{
         med.dose =dosage;
         med.frequency =freq;
         med.schedule=sched;
-        med.perWk =week;
         med.perMnth =month;
         med.dailyTime = daily;
         med.storedIn = stored;

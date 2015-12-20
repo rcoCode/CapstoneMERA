@@ -47,7 +47,6 @@ public class Meds extends Controller{
         String dailyTime=medsForm.data().get("timeDaily");
         String contain = medsForm.data().get("con");
         String freq=medsForm.data().get("freq");
-        String week=medsForm.data().get("week");
         String month=medsForm.data().get("month");
         String pills=medsForm.data().get("pills");
         String mon=medsForm.data().get("Mon");
@@ -58,7 +57,7 @@ public class Meds extends Controller{
         String sat=medsForm.data().get("Sat");
         String sun=medsForm.data().get("Sun");
 
-        if(med_name == null || dosage == null || inTime == null || dailyTime == null || freq == null || week == null || month == null || pills == null){
+        if(med_name == null || dosage == null || inTime == null || dailyTime == null || freq == null || month == null || pills == null){
             flash("error","All fields must be filled");
             return redirect(routes.Users.index(u_id));
         }
