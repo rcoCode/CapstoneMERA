@@ -83,7 +83,7 @@ public class Meds extends Controller{
 
         if (holding != null) {
             holding.save();
-            models.Meds nMed = medsForm.get();
+            models.Meds nMed = new models.Meds();
             nMed.name = med_name;
             nMed.schedule = startDate;
             nMed.dailyTime = timeDaily;
