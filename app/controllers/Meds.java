@@ -27,14 +27,7 @@ public class Meds extends Controller{
         Users logged = Users.find.byId(u_id);
         Dispensor device = logged.device;
         List<Containers> containers = logged.myMeds;
-        Map<String,Boolean> days = new HashMap<>();
-        days.put("Mon",false);
-        days.put("Tues",false);
-        days.put("Weds",false);
-        days.put("Thurs",false);
-        days.put("Fri",false);
-        days.put("Sat",false);
-        days.put("Sun",false);
+        List<String> days = Arrays.asList("Mon","Tues","Weds","Thurs","Fri","Sat","Sun");
         return ok(views.html.Meds.index.render(containers,days));
     }
 
@@ -57,7 +50,19 @@ public class Meds extends Controller{
         String week=medsForm.data().get("week");
         String month=medsForm.data().get("month");
         String pills=medsForm.data().get("pills");
+        String mon=medsForm.data().get("Mon");
+        String tue=medsForm.data().get("Tues");
+        String wed=medsForm.data().get("Weds");
+        String thu=medsForm.data().get("Thurs");
+        String fri=medsForm.data().get("Fri");
+        String sat=medsForm.data().get("Sat");
+        String sun=medsForm.data().get("Sun");
+
         if(med_name == null || dosage == null || inTime == null || dailyTime == null || freq == null || week == null || month == null || pills == null){
+            flash("error","All fields must be filled");
+            return redirect(routes.Users.index(u_id));
+        }
+        if(mon.isEmpty()||tue.isEmpty()||wed.isEmpty()||thu.isEmpty()||fri.isEmpty()||sat.isEmpty()||sun.isEmpty()){
             flash("error","All fields must be filled");
             return redirect(routes.Users.index(u_id));
         }
@@ -90,6 +95,27 @@ public class Meds extends Controller{
             nMed.dose = nDose;
             nMed.frequency = hFreq;
             nMed.perMnth = nMonth;
+            if(mon == "yes"){
+                nMed.days.add("Mon");
+            }
+            if(tue == "yes"){
+                nMed.days.add("Tues");
+            }
+            if(wed == "yes"){
+                nMed.days.add("Weds");
+            }
+            if(thu == "yes"){
+                nMed.days.add("Thurs");
+            }
+            if(fri == "yes"){
+                nMed.days.add("Fri");
+            }
+            if(sat == "yes"){
+                nMed.days.add("Sat");
+            }
+            if(sun == "yes"){
+                nMed.days.add("Sun");
+            }
             nMed.save();
             holding.medication = nMed;
             holding.pillCount = pillCount;
