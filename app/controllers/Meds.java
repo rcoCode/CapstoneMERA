@@ -52,7 +52,7 @@ public class Meds extends Controller{
         String tue=medsForm.data().get("tue");
         String wed=medsForm.data().get("wed");
         String thu=medsForm.data().get("thu");
-        String fri=medsForm.data().get("ri");
+        String fri=medsForm.data().get("fri");
         String sat=medsForm.data().get("sat");
         String sun=medsForm.data().get("sun");
 
