@@ -9,11 +9,14 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static play.data.Form.form;
 
 /**
- * Created by rebec on 12/17/2015.
+ * Created by rebeca on 12/17/2015.
  */
 public class container extends Controller{
     @Security.Authenticated(UserAuth.class)
@@ -50,12 +53,48 @@ public class container extends Controller{
         String inTime=medsForm.data().get("startDate");
         String dailyTime=medsForm.data().get("timeDaily");
         String freq=medsForm.data().get("freq");
-        String week=medsForm.data().get("week");
-        String month=medsForm.data().get("month");
         String pills=medsForm.data().get("pills");
-        if(med_name == null || dosage == null || inTime == null || dailyTime == null || freq == null || week == null || month == null || pills == null){
+        if(med_name == null || dosage == null || inTime == null || dailyTime == null || freq == null|| pills == null){
             flash("error","All fields must be filled");
             return redirect(routes.Users.index(Long.parseLong(session().get("user_id"))));
+        }
+
+        String mon=medsForm.data().get("mon");
+        String tue=medsForm.data().get("tue");
+        String wed=medsForm.data().get("wed");
+        String thu=medsForm.data().get("thu");
+        String fri=medsForm.data().get("fri");
+        String sat=medsForm.data().get("sat");
+        String sun=medsForm.data().get("sun");
+        if(med_name == null || dosage == null || inTime == null || dailyTime == null || freq == null ||  pills == null){
+            flash("error","All fields must be filled");
+            return redirect(routes.Users.index(u_id));
+        }
+        List<String> week= new ArrayList<>();
+        if(mon.equalsIgnoreCase("y")){
+            week.add("mon");
+        }
+        if(tue.equalsIgnoreCase("y")){
+            week.add("tue");
+        }
+        if(wed.equalsIgnoreCase("y")){
+            week.add("wed");
+        }
+        if(thu.equalsIgnoreCase("y")){
+            week.add("thu");
+        }
+        if(fri.equalsIgnoreCase("y")){
+            week.add("fri");
+        }
+        if(sat.equalsIgnoreCase("y")){
+            week.add("sat");
+        }
+        if(sun.equalsIgnoreCase("y")){
+            week.add("sun");
+        }
+        if(week.isEmpty()){
+            flash("error","Days to dispense are required");
+            return redirect(routes.Users.index(u_id));
         }
 
         DateTimeFormatter format = DateTimeFormat.forPattern("yyyy-MM-dd");
@@ -65,8 +104,6 @@ public class container extends Controller{
 
         Long nDose=Long.parseLong(dosage,10);
         Long hFreq=Long.parseLong(freq,10);
-        Long nWeek=Long.parseLong(week,10);
-        Long nMonth=Long.parseLong(month,10);
         Long pillCount=Long.parseLong(pills,10);
 
         Long userID=Long.parseLong(session().get("user_id"));
@@ -77,7 +114,7 @@ public class container extends Controller{
         if (editing.medication.name != med_name){
             Meds dMed = editing.medication;
             dMed.delete();
-            models.Meds nMed = models.Meds.createNewMed(med_name,nDose,startDate,timeDaily,hFreq,nMonth,editing);
+            models.Meds nMed = models.Meds.createNewMed(med_name,nDose,startDate,timeDaily,week,hFreq,editing);
             nMed.save();
             editing.medication =nMed;
             editing.save();
@@ -90,7 +127,7 @@ public class container extends Controller{
             changed.dailyTime = timeDaily;
             changed.schedule = startDate;
             changed.frequency = hFreq;
-            changed.perMnth = nMonth;
+            changed.days = week;
             changed.storedIn = editing;
             changed.save();
             flash("success","Saves Changes to container");

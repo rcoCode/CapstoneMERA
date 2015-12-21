@@ -47,17 +47,16 @@ public class Meds extends Controller{
         String dailyTime=medsForm.data().get("timeDaily");
         String contain = medsForm.data().get("con");
         String freq=medsForm.data().get("freq");
-        String month=medsForm.data().get("month");
         String pills=medsForm.data().get("pills");
-        String mon=medsForm.data().get("Mon");
-        String tue=medsForm.data().get("Tues");
-        String wed=medsForm.data().get("Weds");
-        String thu=medsForm.data().get("Thurs");
-        String fri=medsForm.data().get("Fri");
-        String sat=medsForm.data().get("Sat");
-        String sun=medsForm.data().get("Sun");
+        String mon=medsForm.data().get("mon");
+        String tue=medsForm.data().get("tue");
+        String wed=medsForm.data().get("wed");
+        String thu=medsForm.data().get("thu");
+        String fri=medsForm.data().get("ri");
+        String sat=medsForm.data().get("sat");
+        String sun=medsForm.data().get("sun");
 
-        if(med_name == null || dosage == null || inTime == null || dailyTime == null || freq == null || month == null || pills == null){
+        if(med_name == null || dosage == null || inTime == null || dailyTime == null || freq == null || pills == null){
             flash("error","All fields must be filled");
             return redirect(routes.Users.index(u_id));
         }
@@ -69,9 +68,34 @@ public class Meds extends Controller{
         DateTime timeDaily = hourFormat.parseDateTime(dailyTime);
         Long nDose=Long.parseLong(dosage,10);
         Long hFreq=Long.parseLong(freq,10);
-        Long nMonth=Long.parseLong(month,10);
         Long pillCount=Long.parseLong(pills,10);
         Long c_id = Long.parseLong(contain,10);
+        List<String> week = new ArrayList<>();
+        if(mon.equalsIgnoreCase("y")){
+            week.add("Mon");
+        }
+        if(tue.equalsIgnoreCase("y")){
+            week.add("Tues");
+        }
+        if(wed.equalsIgnoreCase("y")){
+            week.add("Weds");
+        }
+        if(thu.equalsIgnoreCase("y")){
+            week.add("Thurs");
+        }
+        if(fri.equalsIgnoreCase("y")){
+            week.add("Fri");
+        }
+        if(sat.equalsIgnoreCase("y")){
+            week.add("Sat");
+        }
+        if(sun.equalsIgnoreCase("y")){
+            week.add("Sun");
+        }
+        if (week.isEmpty()){
+            flash("error","Days to dispense required");
+            return redirect(routes.Users.index(Long.parseLong(session().get("user_id"))));
+        }
 
         //*****//
         Containers holding = Containers.find.byId(c_id);
@@ -83,34 +107,7 @@ public class Meds extends Controller{
 
         if (holding != null) {
             holding.save();
-            models.Meds nMed = new models.Meds();
-            nMed.name = med_name;
-            nMed.schedule = startDate;
-            nMed.dailyTime = timeDaily;
-            nMed.dose = nDose;
-            nMed.frequency = hFreq;
-            nMed.perMnth = nMonth;
-            if(mon == "yes"){
-                nMed.days.add("Mon");
-            }
-            if(tue == "yes"){
-                nMed.days.add("Tues");
-            }
-            if(wed == "yes"){
-                nMed.days.add("Weds");
-            }
-            if(thu == "yes"){
-                nMed.days.add("Thurs");
-            }
-            if(fri == "yes"){
-                nMed.days.add("Fri");
-            }
-            if(sat == "yes"){
-                nMed.days.add("Sat");
-            }
-            if(sun == "yes"){
-                nMed.days.add("Sun");
-            }
+            models.Meds nMed = models.Meds.createNewMed(med_name, nDose, startDate, timeDaily,week, hFreq, holding);
             nMed.save();
             holding.medication = nMed;
             holding.pillCount = pillCount;

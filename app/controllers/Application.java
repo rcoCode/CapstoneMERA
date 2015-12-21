@@ -17,10 +17,6 @@ import static play.data.Form.form;
 public class Application extends Controller {
 
     public Result index() {
-        if(session().get("user_id") != null){
-            Long u_id = Long.parseLong(session().get("user_id"));
-            return redirect(routes.Users.index(u_id));
-        }
         return ok(index.render("MERA Dispenser"));
     }
 

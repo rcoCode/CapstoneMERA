@@ -85,11 +85,7 @@ public class Requests extends Controller {
             //Here is the redirect if not valid id
         }
 
-        String recipient = "garnelo.anahi@gmail.com";
-        String rFName = "Anahi";
-        String rLName = "Garnelo";
-        String pFName = "Rebeca";
-        String pLName = "Otero";
+
         String statusType = "missed a medication dose";
 //        sendEmail(recipient,rFName,rLName,pFName,pLName,statusType);
         if (containerContent.size() != 0) {

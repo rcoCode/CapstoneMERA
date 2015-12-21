@@ -51,8 +51,6 @@ create table meds (
   dose                      bigint,
   schedule                  timestamp,
   daily_time                timestamp,
-  per_wk                    bigint,
-  per_mnth                  bigint,
   frequency                 bigint,
   updated                   boolean,
   stored_in_id              bigint,

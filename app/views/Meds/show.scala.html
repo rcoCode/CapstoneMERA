@@ -17,14 +17,6 @@
     <div class="col-sm-offset-10">
         <p style="font-size:x-large">@display.frequency</p>
     </div>
-    <h2>Dispense Days Per Week:</h2>
-    <div class="col-sm-offset-10">
-        <p style="font-size:x-large">@display.perWk</p>
-    </div>
-    <h2>Per Month:</h2>
-    <div class="col-sm-offset-10">
-        <p style="font-size:x-large">@display.perMnth</p>
-    </div>
     <div class="col-sm-offset-10">
         <form action="@routes.container.removeMed(display.storedIn.id)" method="post">
             <button class="btn btn-danger btn-large">Empty container</button>

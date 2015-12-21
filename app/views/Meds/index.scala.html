@@ -38,23 +38,74 @@
         </div>
     </div>
 
-    <label class="control-label col-sm-2">Days needed</label>
-    @for(d<-daylist){
+    <h2>Days Needed:</h2>
     <div class="form-group">
-        <label class="control-label col-sm-2" for="@d">@d</label>
+        <label class="control-label col-sm-2" for="mon">Mon</label>
         <div class="col-sm-10">
-            <select name="@d" id="@d" class="form-control input-lg">
-                <option value="yes">yes</option>
-                <option value="no">no</option>
+            <select name="mon" id="mon" class="form-control input-lg">
+                <option value="y">yes</option>
+                <option value="n">no</option>
             </select>
         </div>
     </div>
-    }
 
     <div class="form-group">
-        <label class="control-label col-sm-2" for="month">Weeks per Month needed</label>
+        <label class="control-label col-sm-2" for="tue">Tues</label>
         <div class="col-sm-10">
-            <input type="text" name="month" class="form-control input-lg">
+            <select name="tue" id="tue" class="form-control input-lg">
+                <option value="y">yes</option>
+                <option value="n">no</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="wed">Weds</label>
+        <div class="col-sm-10">
+            <select name="wed" id="wed" class="form-control input-lg">
+                <option value="y">yes</option>
+                <option value="n">no</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="thu">Thurs</label>
+        <div class="col-sm-10">
+            <select name="thu" id="thu" class="form-control input-lg">
+                <option value="y">yes</option>
+                <option value="n">no</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="fri">Fri</label>
+        <div class="col-sm-10">
+            <select name="fri" id="fri" class="form-control input-lg">
+                <option value="y">yes</option>
+                <option value="n">no</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="sat">Sat</label>
+        <div class="col-sm-10">
+            <select name="sat" id="sat" class="form-control input-lg">
+                <option value="y">yes</option>
+                <option value="n">no</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="sun">Sun</label>
+        <div class="col-sm-10">
+            <select name="sun" id="sun" class="form-control input-lg">
+                <option value="y">yes</option>
+                <option value="n">no</option>
+            </select>
         </div>
     </div>
 
