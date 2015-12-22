@@ -60,10 +60,12 @@ public class Application extends Controller {
             flash("error", "Invalid user");
             return redirect(routes.Application.index());
         }
+        newUser.save();
         Long d_id = Long.parseLong(dID);
         Dispensor device = Dispensor.find.where().eq("dispenser",d_id).findUnique();
         if(device != null){
             if(device.owner != null){
+                newUser.delete();
                 flash("error","This device belongs to another user please double check your device id.");
                 return redirect(routes.Application.index());
             }

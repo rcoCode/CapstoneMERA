@@ -57,7 +57,6 @@ public class Users extends Model{
         User.password_hash = passwordHash;
         User.Fname= fName;
         User.Lname= lName;
-        User.save();
 
         return User;
     }
