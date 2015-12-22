@@ -3,10 +3,7 @@ package models;
 import com.avaje.ebean.Model;
 import org.joda.time.DateTime;
 import play.data.validation.Constraints;
-import play.libs.Time;
-
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 /**

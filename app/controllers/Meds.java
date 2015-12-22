@@ -118,6 +118,10 @@ public class Meds extends Controller{
                 //flash("error","Invalid Medication or No Container Could Be Found");
                 return redirect(routes.Users.index(u_id));
             }
+            if(nMed.days == null){
+                flash("error","DAYS EMPTY");
+                return redirect(routes.Users.index(u_id));
+            }
             flash("success", "New Medication information stored");
             return redirect(routes.Users.index(u_id));
         }

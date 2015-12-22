@@ -9,7 +9,7 @@
     }   else{
     <ul>
         @for(m<-mymeds){
-            @if(m.empty == false){
+            @if(m.empty == false && m.medication != null){
             <li>
                 <a href="@routes.Meds.show(m.medication.id)"><button class="btn btn-link btn-lg">@m.medication.name stored in Container @m.medication.storedIn.id</button></a>
             </li>

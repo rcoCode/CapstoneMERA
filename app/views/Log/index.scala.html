@@ -2,7 +2,7 @@
 
 @main(""){
 <center><h1>Medication Logs</h1></center>
-@if(mylog.isEmpty){
+@if(mylog.isEmpty()){
     <h2><em>No logs available for this user.</em></h2>
 }   else{
 <table class="table">
@@ -15,29 +15,30 @@
     </thead>
     <tbody>
         @for(l<-mylog){
-        @if(l.message=="Success"){
+        @if(l.statusType=="Success"){
         <tr class="success">
-            <td>l.niceDate(l.id)</td>
-            <td>l.container.medication.name</td>
-            <td>l.message</td>
+            <td>@l.niceDate(l.id)</td>
+            <td>@if(l.regards.medication != null){@l.regards.medication.name in Container @l.regards.id}  else{Medication in Container @l.regards.id}</td>
+            <td>@l.message</td>
         </tr>
         }
-        @if(l.message=="Warning"){
+        @if(l.statusType=="Warning"){
         <tr class="warning">
-            <td>l.niceDate(l.id)</td>
-            <td>l.container.medication.name</td>
-            <td>l.message</td>
+            <td>@l.niceDate(l.id)</td>
+            <td>@if(l.regards.medication != null){@l.regards.medication.name in Container @l.regards.id}  else{Medication in Container @l.regards.id}</td>
+            <td>@l.message</td>
         </tr>
         }
-        @if(l.message=="Error"){
+        @if(l.statusType=="Error"){
         <tr class="danger">
-            <td>l.niceDate(l.id)</td>
-            <td>l.container.medication.name</td>
-            <td>l.message</td>
+            <td>@l.niceDate(l.id)</td>
+            <td>@if(l.regards.medication != null){@l.regards.medication.name in Container @l.regards.id}  else{Medication in Container @l.regards.id}</td>
+            <td>@l.message</td>
         </tr>
         }
         }
     </tbody>
 </table>
 }
+
 }

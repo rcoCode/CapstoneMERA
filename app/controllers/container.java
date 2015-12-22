@@ -143,8 +143,11 @@ public class container extends Controller{
             flash("error","You cannot perform this action!");
             return redirect(routes.Users.index(u_id));
         }
-        edit.medication.delete();
+        Meds removing = edit.medication;
+        edit.medication = null;
+        removing.delete();
         edit.empty = true;
+        edit.save();
         flash("success","Medications has been removed");
         return redirect(routes.Users.index(u_id));
     }
