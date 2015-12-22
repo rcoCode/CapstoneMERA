@@ -152,7 +152,7 @@ public class Requests extends Controller {
                     String medication = container.medication.name;
                     String message = warnings.get(i).get("Message").toString();
                     String sTime = warnings.get(i).get("Scheduled Time").textValue();
-                    String eTime = warnings.get(i).get("Event Time Stamp").textValue();
+                    String eTime = warnings.get(i).get("Logged Time").textValue();
                     DateTime scheduledTime = format.parseDateTime(sTime);
                     DateTime eventTime = format.parseDateTime(eTime);
                     Log.createNewLog(scheduledTime, eventTime, message,container, user, "Warning");
@@ -167,7 +167,7 @@ public class Requests extends Controller {
                     Containers container = Containers.find.where().eq("device",device).eq("container",containerID).findUnique();
                     String message = errors.get(i).get("Message").toString();
                     String sTime = errors.get(i).get("Scheduled Time").textValue();
-                    String eTime = errors.get(i).get("Event Time Stamp").textValue();
+                    String eTime = errors.get(i).get("Logged Time").textValue();
                     DateTime scheduledTime = format.parseDateTime(sTime);
                     DateTime eventTime = format.parseDateTime(eTime);
                     Log.createNewLog(scheduledTime, eventTime, message,container, user, "Error");
@@ -179,7 +179,7 @@ public class Requests extends Controller {
                     Containers container = Containers.find.where().eq("device",device).eq("container",containerID).findUnique();
                     String message = successes.get(i).get("Message").toString();
                     String sTime = successes.get(i).get("Scheduled Time").textValue();
-                    String eTime = successes.get(i).get("Event Time Stamp").textValue();
+                    String eTime = successes.get(i).get("Logged Time").textValue();
                     DateTime scheduledTime = format.parseDateTime(sTime);
                     DateTime eventTime = format.parseDateTime(eTime);
                     Log.createNewLog(scheduledTime, eventTime, message,container, user, "Success");
