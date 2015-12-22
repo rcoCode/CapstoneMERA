@@ -70,7 +70,7 @@ public class container extends Controller{
             flash("error","All fields must be filled");
             return redirect(routes.Users.index(u_id));
         }
-        List<String> week= new ArrayList<>();
+        ArrayList<String> week= new ArrayList<>();
         if(mon.equalsIgnoreCase("y")){
             week.add("mon");
         }

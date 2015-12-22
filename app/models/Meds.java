@@ -4,6 +4,7 @@ import com.avaje.ebean.Model;
 import org.joda.time.DateTime;
 import play.data.validation.Constraints;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,13 +31,18 @@ public class Meds extends Model{
 
     public Boolean updated;
 
-    @Column(nullable = false)
-    public List<String> days;
+    public ArrayList<String> days = new ArrayList<>();
 
     @OneToOne
     public Containers storedIn;
 
-    public static Meds createNewMed(String medName,Long dosage,DateTime sched, DateTime daily,List<String> week,Long freq,Containers stored) {
+    public Integer daySize(Long m_id){
+        Meds med = Meds.find.byId(m_id);
+        Integer required = med.days.size();
+        return required;
+    }
+
+    public static Meds createNewMed(String medName,Long dosage,DateTime sched, DateTime daily,ArrayList<String> week,Long freq,Containers stored) {
         if(medName == null || dosage==null) {
             return null;
         }

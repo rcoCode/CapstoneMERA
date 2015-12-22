@@ -70,7 +70,7 @@ public class Meds extends Controller{
         Long hFreq=Long.parseLong(freq,10);
         Long pillCount=Long.parseLong(pills,10);
         Long c_id = Long.parseLong(contain,10);
-        List<String> week = new ArrayList<>();
+        ArrayList<String> week = new ArrayList<>();
         if(mon.equalsIgnoreCase("y")){
             week.add("Mon");
         }
@@ -107,7 +107,8 @@ public class Meds extends Controller{
 
         if (holding != null) {
             holding.save();
-            models.Meds nMed = models.Meds.createNewMed(med_name, nDose, startDate, timeDaily,week, hFreq, holding);
+            models.Meds nMed = models.Meds.createNewMed(med_name, nDose, startDate,timeDaily,week,hFreq, holding);
+
             nMed.save();
             holding.medication = nMed;
             holding.pillCount = pillCount;
@@ -118,10 +119,11 @@ public class Meds extends Controller{
                 //flash("error","Invalid Medication or No Container Could Be Found");
                 return redirect(routes.Users.index(u_id));
             }
-            if(nMed.days == null){
+            if(nMed.days.isEmpty()){
                 flash("error","DAYS EMPTY");
                 return redirect(routes.Users.index(u_id));
             }
+            System.out.print("Days" + nMed.days + '\n');
             flash("success", "New Medication information stored");
             return redirect(routes.Users.index(u_id));
         }
@@ -153,7 +155,12 @@ public class Meds extends Controller{
             flash("error","You do not have access to this page");
             return redirect(routes.Users.index(u_id));
         }
-        Integer wkdays = display.days.size();
+        if (display.days == null){
+            flash("error","Days are a bitch");
+            return redirect(routes.Users.index(u_id));
+        }
+        System.out.print("Days" + display.days + '\n');
+        ArrayList<String> wkdays = display.days;
         return ok(views.html.Meds.show.render(display,wkdays));
     }
 
