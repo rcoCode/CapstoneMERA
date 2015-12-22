@@ -153,7 +153,8 @@ public class Meds extends Controller{
             flash("error","You do not have access to this page");
             return redirect(routes.Users.index(u_id));
         }
-        return ok(views.html.Meds.show.render(display));
+        Integer wkdays = display.days.size();
+        return ok(views.html.Meds.show.render(display,wkdays));
     }
 
 }

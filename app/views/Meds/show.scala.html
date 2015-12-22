@@ -1,4 +1,4 @@
-@(display: models.Meds)
+@(display: models.Meds,wkdays:Integer)
 
 @main(""){
 <div class="container">
@@ -19,7 +19,7 @@
     </div>
     <h2>Days to Dispense:</h2>
     <div class="col-sm-offset-10">
-        <p style="font-size:x-large"></p>
+        <p style="font-size:x-large">@wkdays</p>
     </div>
     <div class="col-sm-offset-10">
         <form action="@routes.container.removeMed(display.storedIn.id)" method="post">

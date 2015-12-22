@@ -30,6 +30,7 @@ public class Meds extends Model{
 
     public Boolean updated;
 
+    @Column(nullable = false)
     public List<String> days;
 
     @OneToOne
