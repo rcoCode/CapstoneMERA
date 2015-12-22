@@ -61,7 +61,13 @@ public class Application extends Controller {
             return redirect(routes.Application.index());
         }
         Long d_id = Long.parseLong(dID);
-        Dispensor device = Dispensor.find.byId(d_id);
+        Dispensor device = Dispensor.find.where().eq("dispenser",d_id).findUnique();
+        if(device != null){
+            if(device.owner != null){
+                flash("error","This device belongs to another user please double check your device id.");
+                return redirect(routes.Application.index());
+            }
+        }
         if(device == null){
             device = Dispensor.createNewDispensor(newUser,sTime,eTime, Long.parseLong(dID));
         }
