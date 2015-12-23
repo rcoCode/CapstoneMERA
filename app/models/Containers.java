@@ -57,13 +57,16 @@ public class Containers extends Model{
         return container;
     }
 
-    public static void emptyContainer (Dispensor device, Long storedIn) {
-        Containers container = Containers.find.where().eq("device",device).eq("container",storedIn).findUnique();
-        System.out.print("Emptying Container: " + container.container + "\n");
-        System.out.print(container.empty + "\n");
+    public static void emptyContainer (Containers container, Dispensor device) {
         container.empty = true;
-        //Remove Medication Function Needs to be CALLED
-//        container.medication = null;
+/*        Meds gone = container.medication;
+        if(gone != null) {
+            container.medication = null;
+            gone.delete();
+        }
+        */
+        container.device = device;
+        container.owner = device.owner;
         container.pillCount = (long) 0;
         container.save();
     }

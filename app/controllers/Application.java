@@ -9,17 +9,22 @@ import play.*;
 import play.data.DynamicForm;
 import play.mvc.*;
 import views.html.*;
+import static play.data.Form.form;
 
 //http://thawing-ravine-9396.herokuapp.com/
 
-import static play.data.Form.form;
-
+/* This class controlls the functions needed to access the index page, login, sign up,
+   and log out of the website
+*/
 public class Application extends Controller {
-
+    //Renders the index page, used by the GET route for the index page
     public Result index() {
         return ok(index.render("MERA Dispenser"));
     }
-
+    //Login() function controlls the POST function for the user login it receives the username
+    //and password entered by the user in the login form. It finds the user by the username and
+    //calls authenticate(password) to check that the password is correct. It then redirects to the
+    //User page for a successful login or returns tot the index page in the case of a login error
     public Result login() {
         DynamicForm userForm=form().bindFromRequest();
         String username=userForm.data().get("username");
@@ -34,7 +39,7 @@ public class Application extends Controller {
         }
         return redirect(routes.Users.index(users.id));
     }
-
+    //The
     public Result signup() {
         return ok(views.html.signup.render(""));
     }
@@ -83,7 +88,5 @@ public class Application extends Controller {
         session().remove("user_id");
         return redirect(routes.Application.index());
     }
-
-
 
 }

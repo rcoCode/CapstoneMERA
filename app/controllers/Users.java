@@ -2,6 +2,7 @@ package controllers;
 
 import models.Contact;
 import models.Containers;
+import models.Dispensor;
 import play.mvc.Controller;
 import play.mvc.*;
 import models.Meds;
@@ -24,7 +25,8 @@ public class Users extends Controller{
         models.Users logged = models.Users.find.byId(u_id);
         List<Containers> mymeds = logged.myMeds;
         List<Contact> carers = logged.contacts;
-        return ok(views.html.Users.index.render(mymeds,carers));
+        Dispensor mine = logged.device;
+        return ok(views.html.Users.index.render(mymeds,carers,mine));
     }
 
 }

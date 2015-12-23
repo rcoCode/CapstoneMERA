@@ -42,15 +42,21 @@ import play.data.DynamicForm;
 /**
  * Created by anahigarnelo on 12/12/15.
 */
+
+/*
+Requests Classes: Main purpose is to handle HTTP requests
+ GET       Dispenser Information
+ POST      
+
+
+*/
 public class Requests extends Controller {
     public Result dispenserData(Long dID) {
         ObjectNode dispenserInformation = Json.newObject();
         ArrayNode containerContent = dispenserInformation.arrayNode();
-        Boolean validID = false;
         if (dID!=0) {
             Dispensor device = Dispensor.find.where().eq("dispenser",dID).findUnique();
             if (device!=null) {
-                validID = true;
                 dispenserInformation.put("Dispenser ID",device.dispenser);
                 String sTime = device.startTime.toString("hh:mm aa");
                 String eTime = device.endTime.toString("hh:mm aa");
@@ -59,7 +65,7 @@ public class Requests extends Controller {
                 if (device.owner!=null) {
                     List<Containers> containers;
                     containers = Containers.find.where().eq("device",device).eq("empty",false).findList();
-                    if (containers!=null) {
+                    if (containers.isEmpty()) {
                         for (Containers container: containers) {
                             if (container.medication!=null && container.medication.updated==true) {
                                 ObjectNode containerInformation = Json.newObject();
@@ -79,12 +85,6 @@ public class Requests extends Controller {
             }
         }
 
-        else {
-            //Here is the redirect if not valid id
-        }
-
-
-        String statusType = "missed a medication dose";
         if (containerContent.size() != 0) {
             dispenserInformation.put("Updated", true);
             dispenserInformation.put("Containers", containerContent);
@@ -114,7 +114,7 @@ public class Requests extends Controller {
                         Containers.createContainer(device,containerID);
                     }
                     else {
-                        Containers.emptyContainer(device, containerID);
+                        Containers.emptyContainer(container,device);
                     }
                 }
             }
@@ -147,7 +147,6 @@ public class Requests extends Controller {
                 for (int i=0; i<warnings.size();i++) {
                     Long containerID = Long.parseLong(warnings.get(i).get("Container ID").toString());
                     Containers container = Containers.find.where().eq("device",device).eq("container",containerID).findUnique();
-                    String medication = container.medication.name;
                     String message = warnings.get(i).get("Message").toString();
                     String sTime = warnings.get(i).get("Scheduled Time").textValue();
                     String eTime = warnings.get(i).get("Logged Time").textValue();
@@ -161,6 +160,8 @@ public class Requests extends Controller {
                     sendEmail("Errors",user,errors,date,device);
                 }
                 */
+
+
                 for (int i=0; i<errors.size();i++) {
                     Long containerID = Long.parseLong(errors.get(i).get("Container ID").toString());
                     Containers container = Containers.find.where().eq("device",device).eq("container",containerID).findUnique();

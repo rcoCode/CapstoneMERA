@@ -1,8 +1,8 @@
-@(mymeds:List[Containers],carers:List[Contact])
+@(mymeds:List[Containers],carers:List[Contact],mine:Dispensor)
 
 @main("Profile") {
 <div class="container">
-    <h1>My Medications</h1>
+    <h1>My Device @mine.dispenser Medications</h1>
     <br>
     @if(mymeds == null){
     <h3><em>No medications stored</em></h3>
