@@ -129,7 +129,7 @@ public class Requests extends Controller {
             return badRequest("Expecting Json Data");
         }
         else {
-            DateTimeFormatter format = DateTimeFormat.forPattern("MM/dd/yyy hh:mm aa");
+            DateTimeFormatter format = DateTimeFormat.forPattern("MM/dd/yyyy hh:mm aa");
             Long dID = Long.parseLong(json.get("Dispenser ID").toString());
             Dispensor device = Dispensor.find.where().eq("dispenser",dID).findUnique();
             Long uID = device.owner.id;
@@ -198,7 +198,7 @@ public class Requests extends Controller {
         List<Contact> recipients = user.contacts;
         if (recipients.isEmpty())
             System.out.print("No recipients to send to\n");
-        DateTimeFormatter format = DateTimeFormat.forPattern("MM/dd/yyy hh:mm aa");
+        DateTimeFormatter format = DateTimeFormat.forPattern("MM/dd/yyyy hh:mm aa");
         String logMessage = "<table style=\"width:100%\">";
         logMessage+="<caption>"+statusType+"</caption>";
         logMessage+="<tr><td>Container ID</td>";
