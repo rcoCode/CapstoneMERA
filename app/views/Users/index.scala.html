@@ -25,12 +25,7 @@
     }   else{
     <ul>
         @for(m<-mymeds){
-            @if(m.medication != null && m.empty == true){
-            <li>
-                <a href="@routes.container.edit(m.id)"><button class="btn btn-link btn-lg">Empty Container @m.id</button></a>
-            </li>
-            }
-            @if(m.medication == null){
+            @if(m.medication == null || m.empty == true){
             <li>
                 <a href='@routes.Meds.index(Long.parseLong(session().get("user_id")))'><button class="btn btn-link btn-lg">Empty Container @m.id</button></a>
             </li>
