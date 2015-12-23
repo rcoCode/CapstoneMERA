@@ -140,9 +140,10 @@ public class Requests extends Controller {
             String date = json.get("Time Stamp").textValue();
             DateTime today = format.parseDateTime(date);
             if (warnings !=null) {
-                if (warnings.size()!=0) {
+                /*if (warnings.size()!=0) {
                     sendEmail("Warnings",user,warnings,date,device);
                 }
+                */
                 for (int i=0; i<warnings.size();i++) {
                     Long containerID = Long.parseLong(warnings.get(i).get("Container ID").toString());
                     Containers container = Containers.find.where().eq("device",device).eq("container",containerID).findUnique();
@@ -156,9 +157,10 @@ public class Requests extends Controller {
                 }
             }
             if (errors !=null) {
-                if (errors.size()!=0) {
+                /*if (errors.size()!=0) {
                     sendEmail("Errors",user,errors,date,device);
                 }
+                */
                 for (int i=0; i<errors.size();i++) {
                     Long containerID = Long.parseLong(errors.get(i).get("Container ID").toString());
                     Containers container = Containers.find.where().eq("device",device).eq("container",containerID).findUnique();
