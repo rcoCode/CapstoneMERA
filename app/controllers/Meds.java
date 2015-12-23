@@ -15,8 +15,12 @@ import static play.data.Form.form;
 
 /**
  * Created by rebeca on 11/17/2015.
+ * Controls the GET and POST requests for pages and actions related to medications
  */
 public class Meds extends Controller{
+    /*Controls the GET request for the medication form. It takes a user id as an argument and searches
+    * for the logged user in the database. It The device and containers for that user are retrieved
+    * and the medication form is rendered with access to that information for the user*/
     @Security.Authenticated(UserAuth.class)
     public Result index(Long id){
         Long u_id = Long.parseLong(session().get("user_id"));
@@ -30,7 +34,8 @@ public class Meds extends Controller{
         List<String> days = Arrays.asList("Mon","Tues","Weds","Thurs","Fri","Sat","Sun");
         return ok(views.html.Meds.index.render(containers,days));
     }
-
+    /*Controls the POST for the medication form. It takes the user id as an argument. The function
+    * ensures that all the fields were received from the  */
     @Security.Authenticated(UserAuth.class)
     public Result createMed(Long id) {
         models.Users owns = Users.find.byId(id);
@@ -64,7 +69,7 @@ public class Meds extends Controller{
         //Convert formats
         DateTimeFormatter format = DateTimeFormat.forPattern("yyyy-MM-dd");
         DateTime startDate = format.parseDateTime(inTime);
-        DateTimeFormatter hourFormat = DateTimeFormat.forPattern("hh:mm");
+        DateTimeFormatter hourFormat = DateTimeFormat.forPattern("HH:mm");
         DateTime timeDaily = hourFormat.parseDateTime(dailyTime);
         Long nDose=Long.parseLong(dosage,10);
         Long hFreq=Long.parseLong(freq,10);

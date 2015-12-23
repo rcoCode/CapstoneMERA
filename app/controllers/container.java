@@ -17,8 +17,13 @@ import static play.data.Form.form;
 
 /**
  * Created by rebeca on 12/17/2015.
+ * Controller to handle the GET and POST requests for functionality which
+ * affects the container class
  */
 public class container extends Controller{
+    /*Controlls the GET request for the container editing page. It takes the container id as an
+    * argument. It searches the database for the container, makes sure that the user logged in is
+    * the container owner and renders the html page with access to the container information*/
     @Security.Authenticated(UserAuth.class)
     public Result index(Long id){
         Long u_id = Long.parseLong(session().get("user_id"));
@@ -33,7 +38,13 @@ public class container extends Controller{
         }
         return ok(views.html.containers.index.render(editing));
     }
-
+    /*Handles the POST for the container editing form. The function takes the container id as an
+    * argument and makes sure that the logged user is the container own. It checks that all the fields
+    * were entered and converts the date and integer inputs to the proper format. The medication is
+    * checked to see if the medication stored in the container has been changed and the changes are made
+    * to the medication in the database. If all the inputs were given correctly the changes for the
+    * container and medication, then they are stored. The user is redirected to their main page after
+    * the function has completed.*/
     @Security.Authenticated(UserAuth.class)
     public Result edit(Long id){
         Long u_id = Long.parseLong(session().get("user_id"));
@@ -134,7 +145,11 @@ public class container extends Controller{
             return redirect(routes.Users.index(u_id));
         }
     }
-
+    /*Handles the POST for the medication removal functionality. It takes the container id as an argument.
+    * The function ensures that the user is logged in and that the session id matches the container owner's
+    * id. The medication is stored into a temporary variable, the medication for the container is set to
+    * null, the container is set to empty, and the changes are stored. The user is redirected to their
+    * main page.*/
     @Security.Authenticated(UserAuth.class)
     public Result removeMed(Long id){
         Long u_id = Long.parseLong(session().get("user_id"));
