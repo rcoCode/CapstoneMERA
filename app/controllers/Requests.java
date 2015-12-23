@@ -47,7 +47,7 @@ public class Requests extends Controller {
         ObjectNode dispenserInformation = Json.newObject();
         ArrayNode containerContent = dispenserInformation.arrayNode();
         Boolean validID = false;
-        if (dID!=0) { //dID == 0 is the default value therefore an error
+        if (dID!=0) {
             Dispensor device = Dispensor.find.where().eq("dispenser",dID).findUnique();
             if (device!=null) {
                 validID = true;
@@ -61,12 +61,10 @@ public class Requests extends Controller {
                     containers = Containers.find.where().eq("device",device).eq("empty",false).findList();
                     if (containers!=null) {
                         for (Containers container: containers) {
-//                            container.updated = false;
                             if (container.medication!=null && container.medication.updated==true) {
                                 ObjectNode containerInformation = Json.newObject();
                                 containerInformation.put("Container ID", container.container);
                                 containerInformation.put("Pill Count", container.pillCount);
-//                                containerInformation.put("Updated", container.medication.updated);
                                 container.medication.updated = false;
                                 container.medication.save();
                                 ObjectNode medicine = Json.newObject();
@@ -87,7 +85,6 @@ public class Requests extends Controller {
 
 
         String statusType = "missed a medication dose";
-//        sendEmail(recipient,rFName,rLName,pFName,pLName,statusType);
         if (containerContent.size() != 0) {
             dispenserInformation.put("Updated", true);
             dispenserInformation.put("Containers", containerContent);
@@ -192,13 +189,15 @@ public class Requests extends Controller {
     //https://github.com/playframework/play-mailer
     @Inject MailerClient mailerClient;
     public void sendEmail(String statusType, Users user, JsonNode statusMessage, String today, Dispensor device) {
+        if (statusType.isEmpty() || user==null || statusMessage==null || today.isEmpty() || device==null){
+            System.out.print("Parameter Errors\n");
+        }
         String notification = "MERA Pill Dispenser";
         String pFName = user.Fname;
         String pLName = user.Lname;
         List<Contact> recipients = user.contacts;
-//        Date date = Calendar.getInstance().getTime();
-//        DateFormat formatter = new SimpleDateFormat("EEEE, dd MMMM yyyy");
-//        String today = date.toString("dd MMMM yyyy");
+        if (recipients.isEmpty())
+            System.out.print("No recipients to send to\n");
         DateTimeFormatter format = DateTimeFormat.forPattern("MM/dd/yyy hh:mm aa");
         String logMessage = "<table style=\"width:100%\">";
         logMessage+="<caption>"+statusType+"</caption>";
@@ -214,6 +213,9 @@ public class Requests extends Controller {
             String message = statusMessage.get(j).get("Message").textValue();
             String sTime = statusMessage.get(j).get("Scheduled Time").textValue();
             String eTime = statusMessage.get(j).get("Logged Time").textValue();
+            if (containerID==null || container==null || message.isEmpty() || sTime.isEmpty() || eTime.isEmpty()) {
+                System.out.print("Something error\n");
+            }
             logMessage += "<td>" + containerID + "</td>";
             logMessage += "<td>" + container.medication.name + "</td>";
             logMessage += "<td>" + message + "</td>";
@@ -231,9 +233,6 @@ public class Requests extends Controller {
             String rFName = recipients.get(i).fName;
             String rLName = recipients.get(i).lName;
             String rEmail = recipients.get(i).email;
-//            rFName = "Emily";
-//            rLName = "Lee";
-//            rEmail = "amily52131@aol.com";
             String greeting = "<p>Hello " +  rFName + " " + rLName + ",";
             Email email = new Email();
             email.setSubject(notification);
