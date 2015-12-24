@@ -35,7 +35,12 @@ public class Meds extends Controller{
         return ok(views.html.Meds.index.render(containers,days));
     }
     /*Controls the POST for the medication form. It takes the user id as an argument. The function
-    * ensures that all the fields were received from the  */
+    * ensures that all the fields were received from the user and converts the date, time, and number fields to
+     * the proper format. It is currently set up to receive the days of the week that the user wishes
+      * the medication to be dispense but this a feature that would be added in the future on the device.
+      * The information is stored and the medication is added. The container selected by the user is found
+      * in the database and the medication, empty, and pill count attributes are updates. Both the medication
+      * and container changes are stored and the user is redirected to their main page.*/
     @Security.Authenticated(UserAuth.class)
     public Result createMed(Long id) {
         models.Users owns = Users.find.byId(id);
@@ -135,7 +140,10 @@ public class Meds extends Controller{
         flash("error","Container not found");
         return redirect(routes.Users.index(u_id));
     }
-
+    /*This function handle the GET request to display the medication information in
+    * a particular container. It takes a medication id as an argument. The function makes sure that
+    * the user is logged in and that the medication data is link to a container which the logged in
+    * user owns. The medication retrieved is then rendered for access on the user page.*/
     @Security.Authenticated(UserAuth.class)
     public Result show(Long id){
         Long u_id = Long.parseLong(session().get("user_id"));

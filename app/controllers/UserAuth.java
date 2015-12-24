@@ -7,6 +7,8 @@ import play.mvc.Security;
 
 /**
  * Created by rebeca on 11/16/2015.
+ * Code for user authentication. This code I did not generate on my own but was given access to it
+ * from  Professor Molina's code from CUNY Tech Prep
  */
 public class UserAuth extends Security.Authenticator {
     // When return is null, Authentication failed
