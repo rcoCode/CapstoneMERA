@@ -1,0 +1,49 @@
+@(mylog:List[Log])
+
+@main(""){
+<center><h1>Medication Logs</h1></center>
+@if(mylog.isEmpty()){
+    <h2><em>No logs available for this user.</em></h2>
+}   else{
+<table class="table">
+    <thead>
+    <tr>
+        <th>Time</th>
+        <th>Status Type</th>
+        <th>Medication</th>
+        <th>Container</th>
+    </tr>
+    </thead>
+    <tbody>
+        @for(l<-mylog){
+        @if(l.statusType=="Success"){
+        <tr class="success">
+            <td>@l.niceDate(l.id)</td>
+            <td>@l.message</td>
+            <td>@if(l.regards == null || l.regards.medication == null || l.regards.medication.name == null){<em>Unknown</em> Medication} else{@l.regards.medication.name}</td>
+            <td>@if(l.regards == null || l.regards.id == null){Container <em>Unknown</em>} else {Container @l.regards.id}</td>
+        </tr>
+        }
+        @if(l.statusType=="Warning"){
+        <tr class="warning">
+            <td>@l.niceDate(l.id)</td>
+            <td>@l.message</td>
+            <td>@if(l.regards == null || l.regards.medication == null || l.regards.medication.name == null){<em>Unknown</em> Medication} else{@l.regards.medication.name}</td>
+            <td>@if(l.regards == null || l.regards.id == null){Container <em>Unknown</em>} else {Container @l.regards.id}</td>
+        </tr>
+        }
+        @if(l.statusType=="Error"){
+        <tr class="danger">
+            <td>@l.niceDate(l.id)</td>
+            <td>@l.message</td>
+            <td>@if(l.regards == null || l.regards.medication == null || l.regards.medication.name == null){<em>Unknown</em> Medication} else{@l.regards.medication.name}</td>
+            <td>@if(l.regards == null || l.regards.id == null){Container <em>Unknown</em>} else {Container @l.regards.id}</td>
+        </tr>
+        }
+
+        }
+    </tbody>
+</table>
+}
+
+}

@@ -1,0 +1,57 @@
+@(mymeds:List[Containers],carers:List[Contact],mine:Dispensor)
+
+@main("Profile") {
+<div class="container">
+    <h1>My Device @mine.dispenser Medications</h1>
+    <br>
+    @if(mymeds == null){
+    <h3><em>No medications stored</em></h3>
+    }   else{
+    <ul>
+        @for(m<-mymeds){
+            @if(m.empty == false && m.medication != null){
+            <li>
+                <a href="@routes.Meds.show(m.medication.id)"><button class="btn btn-link btn-lg">@m.medication.name stored in Container @m.medication.storedIn.id</button></a>
+            </li>
+            }
+        }
+    </ul>
+    <br>
+    }
+    <h1>Empty Containers</h1>
+    <br>
+    @if(mymeds == null){
+    <h3><em>No containers detected</em></h3>
+    }   else{
+    <ul>
+        @for(m<-mymeds){
+            @if(m.medication == null || m.empty == true){
+            <li>
+                <a href='@routes.Meds.index(Long.parseLong(session().get("user_id")))'><button class="btn btn-link btn-lg">Empty Container @m.id</button></a>
+            </li>
+            }
+        }
+    </ul>
+    <br>
+    }
+    <h1>My Contacts</h1>
+    <br>
+    <div class="pull-right">
+        <a href='@routes.contacts.index(Long.parseLong(session().get("user_id")))'><button class="btn btn-primary btn-lg">Add Contact</button></a>
+    </div>
+    @if(carers == null){
+    <h3><em>No contacts added</em></h3>
+    }   else{
+    <ul>
+        @for(c<-carers){
+        <li>
+            <h2>@c.fName @c.lName</h2>
+            <h4><em><b>Email:</b> @c.email</em></h4>
+            <h5><form action='@routes.contacts.removeCont(c.id)' method="post"><button class="btn btn-danger btn-sm"><em>Delete Contact</em></button> </form> </h5>
+        </li>
+        }
+    </ul>
+    }
+</div>
+
+}

@@ -1,0 +1,33 @@
+@(display: models.Meds,wkdays:ArrayList[String])
+
+@main(""){
+<div class="container">
+    <div class="col-sm-offset-10"><a href="@routes.container.index(display.storedIn.id)" role="button" class="btn btn-primary btn-lg">Edit Medication</a></div>
+    <center><h1>@display.name</h1></center>
+
+    <h2>Dosage:</h2>
+    <div class="col-sm-offset-10">
+        <p style="font-size:x-large">@display.dose</p>
+    </div>
+    <h2>First Dose Time:</h2>
+    <div class="col-sm-offset-10">
+        <p style="font-size:x-large">@display.niceDate(display.id)</p>
+    </div>
+    <h2>Frequency in Hours:</h2>
+    <div class="col-sm-offset-10">
+        <p style="font-size:x-large">@display.frequency</p>
+    </div>
+    <h2>Days to Dispense:</h2>
+    <div class="col-sm-offset-10">
+        <p style="font-size:x-large">
+            @for(w<-wkdays){
+            @w
+            }</p>
+    </div>
+    <div class="col-sm-offset-10">
+        <form action="@routes.container.removeMed(display.storedIn.id)" method="post">
+            <button class="btn btn-danger btn-large">Empty container</button>
+        </form>
+    </div>
+</div>
+}
