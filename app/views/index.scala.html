@@ -1,36 +1,105 @@
 @(message: String)
 
-@main("MERA Dispenser") {
-
-<div class="container">
-    <div class="container-fluid">
-        <div class="page-header" style="padding-top:30px">
-            <div class="row">
-                <img src="@routes.Assets.versioned("images/transBanner.png")" class="img-responsive">
-            </div>
+@main("MERA Pill Dispenser") {
+<body>
+    <div class="content">
+        <h1 align="center" style="padding-top:1em; padding-bottom:0.5em;">MERA Pill Dispenser</h1>
+        <hr>
+        <span style="padding-left: 3em; padding-right: 3em; padding-top:7em; padding-bottom:7em; font-size:1.25em; display:block">
+            The <b>MERA Pill Dispenser</b> is an <b>Internet of Things</b> (IoT) medication organizing system that manages a given user's medications and dispenses the proper dosage based on user input.
+        </span>
+        <hr>
+        <h2 align="center" style="padding-top:0.5em; padding-bottom:0.5em;">Project Concept</h2>
+        <hr>
+        <div class="text-container">
+            <p>There are two main components of the MERA Pill Dispenser system: the physical pill dispenser component and the web interface component.</p>
+            <dl class="block">
+                <dt>MERA Pill Dispenser</dt>
+                <dd class="block">
+                    The physical component of the pill dispenser is an embedded system controlled by a Raspberry Pi that dispenses pills based on the medication schedule and dosage provided by the user.
+                </dd>
+                <dt>MERA Website</dt>
+                <dd class="block">
+                    The web interface component handles communication between the user and the physical unit by allowing users to input their medication schedule and dosage via an interactive website. The information is collected by the website and sent to the physical pill dispenser using HTTP requests so that these instructions can be processed and carried out at real time.
+                </dd>
+            </dl>
         </div>
+        <hr>
+        <h2 align="center" style="padding-top:0.5em; padding-bottom:0.5em;">MERA Pill Dispenser Design</h2>
+        <hr>
+        <div class="image">
+                <img src="@routes.Assets.versioned("images/interactions.png")" style="width:85%;" class="img-responsive">
+        </div>
+        <hr>
+        <div class="text-container">
+            <p>There are currently many pill dispensers in the market but these typically require loading predetermined doses into containers to dispense at a later time.</p>
+            <hr>
+            <p>The MERA Pill Dispenser uses a different design where each medication is loaded into a container and pills are counted at the time of dispensing using a sensor.</p>
+            <div style="text-align: center; padding-bottom:0.5em;">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/HnefjHBUxis" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <p>This system allows greater automatization as users can take individual medications at different times of the day.</p>
+            <p>Furthermore, medication instructions can easily be updated from anywhere via the MERA website as soon as the doctor increases/decreases a medication dosage or asks the patient to stop taking a medication.</p>
+
+        </div>
+        <hr>
+
+        <h2 align="center" style="padding-top:0.5em; padding-bottom:0.5em;">Team</h2>
+        <hr>
+        <div class="text-container">
+
+            <h3>Shankun Lin</h3>
+            <h4>Pill Dispenser Hardware</h4>
+            <p class="indent">Implemented the hardware of the physical dispensing unit to allow pill counting, dispensing and reporting of event statuses.</p>
+            <hr>
+            <h3>Ying Fang Lee</h3>
+            <h4>Pill Dispenser Software</h4>
+            <p class="indent">Managed data collected from website to schedule medications using a min heap structure and controlled call functions for the physical pill dispenser.</p>
+            <hr>
+            <h3>Rebeca Otero</h3>
+            <h4>Web Interface</h4>
+            <p class="indent">Designed and implemented the website interface which included creating user accounts and managing a database that stored user input.</p>
+            <hr>
+            <h3>Anahi Garnelo</h3>
+            <h4>Data Exchange</h4>
+            <p class="indent">Established a communication path between the web interface and physical pill dispenser component using HTTP requests and processed data to maintain database content updated.</p>
+        </div>
+
+        <hr>
+
+        <span style="padding-left: 3em; padding-right: 3em; padding-top:2em; padding-bottom: 2em; font-size:1.25em; display:block">
+            <h4 align="center">Semester Topic: Internet of Things (IoT)</h4>
+            <p align="center">Advanced Applications: Capstone Course in Computer Science</p>
+            <p align="center">Computer Science Department</p>
+            <p align="center">Hunter College | The City University of New York</p>
+        </span>
+        <hr>
+        <span style="padding-left: 3em; padding-right: 3em; padding-top:1em; padding-bottom: 1em; font-size:1em; display:block">
+            <h4 align="center">Source Code</h4>
+
+            <p align="center">
+                MERA Website Source Code:
+                <a href="https://github.com/rcoCode/CapstoneMERA">https://github.com/rcoCode/CapstoneMERA</a>
+            </p>
+            <p align="center">
+                MERA Pill Dispenser (Hardware) Source Code:
+               <a href="https://github.com/hishehim/MERA-Dispenser-Unit">https://github.com/hishehim/MERA-Dispenser-Unit</a>
+            </p>
+            <p align="center">
+                MERA Pill Dispenser (Software) Source Code:
+               <a href="https://github.com/amily52131/MERA_PiMain">https://github.com/amily52131/MERA_PiMain</a>
+            </p>
+            <p align="center">
+                MERA Pill Dispenser (Data Exchange) Source Code:
+                <a href="https://github.com/agarnelo/MeraRaspberryPi">https://github.com/agarnelo/MeraRaspberryPi</a>
+            </p>
+
+        </span>
+        <hr>
+        <span style="padding-left: 3em; padding-right: 3em; padding-top:0.5em; padding-bottom: 0.5em; font-size:1em; display:block">
+            <p align="center">Copyright © 2015-2017 | Anahi Garnelo, Shankun Lin, Ying Fang Lee, Rebeca Otero</p>
+        </span>
+        <hr>
     </div>
-        <br>
-    @if(session().get("user_id")==null){
-    <h1>Login Form</h1>
-    <form class="form-horizontal" action="@routes.Application.login()" method="post">
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="username">Username</label>
-            <div class="col-sm-10">
-                <input type="text" name="username" class="form-control input-lg">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="password">Password</label>
-            <div class="col-sm-10">
-                <input type="password" name="password" class="form-control input-lg">
-            </div>
-        </div>
-        <button class="btn btn-default btn-lg">Login</button>
-    </form>
-
-    }
-</div>
-
+</body>
 }

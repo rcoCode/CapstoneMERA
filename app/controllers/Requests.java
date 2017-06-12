@@ -168,24 +168,6 @@ public class Requests extends Controller {
     We return a redirect to home page upon completion.
      */
 
-//    public DateTime scheduleTime;
-//
-//    public DateTime loggedTime;
-//
-//    public String statusType;
-//
-//    public String message;
-//
-//    @ManyToOne
-//    public Containers regards;
-//
-//    @ManyToOne
-//    public Users own;
-//
-//    public static Finder<Long, Log> find = new Finder<Long, Log>(Log.class);
-
-//    postData = {"Dispenser ID":1,"Time Stamp": "12/20/2015 08:45 PM","Warning":[{"Container ID": 1,"Message":"Missed Medication Dose", "Scheduled Time":"12/18/2015 09:10 AM", "Logged Time":"12/18/2015 09:10 AM"}]}
-
     @BodyParser.Of(BodyParser.TolerantJson.class)
     public Result logActions() {
         JsonNode json = request().body().asJson();
@@ -200,6 +182,8 @@ public class Requests extends Controller {
             Long uID =  device.owner.id;
             models.Users user = Users.find.byId(uID);
             JsonNode warnings = json.get("Warning");
+            JsonNode errors = json.get("Error");
+            JsonNode successes = json.get("Success");
             String date = json.get("Time Stamp").textValue();
             DateTime today = format.parseDateTime(date);
             if (warnings !=null) {
@@ -213,39 +197,37 @@ public class Requests extends Controller {
                     DateTime eventTime = format.parseDateTime(eTime);
                     Log.createNewLog(scheduledTime, eventTime, message,container, user, "Warning");
                 }
-                printLogs(uID);
+            }
+
+            if (errors !=null) {
+                for (int i=0; i<errors.size();i++) {
+                    Long containerID = Long.parseLong(errors.get(i).get("Container ID").toString());
+                    Containers container = Containers.find.where().eq("device",device).eq("container",containerID).findUnique();
+                    String message = errors.get(i).get("Message").toString();
+                    String sTime = errors.get(i).get("Scheduled Time").textValue();
+                    String eTime = errors.get(i).get("Logged Time").textValue();
+                    DateTime scheduledTime = format.parseDateTime(sTime);
+                    DateTime eventTime = format.parseDateTime(eTime);
+                    Log.createNewLog(scheduledTime, eventTime, message,container, user, "Error");
+                }
+            }
+
+            if (successes !=null) {
+                for (int i=0; i<successes.size();i++) {
+                    Long containerID = Long.parseLong(successes.get(i).get("Container ID").toString());
+                    Containers container = Containers.find.where().eq("device",device).eq("container",containerID).findUnique();
+                    String message = successes.get(i).get("Message").toString();
+                    String sTime = successes.get(i).get("Scheduled Time").textValue();
+                    String eTime = successes.get(i).get("Logged Time").textValue();
+                    DateTime scheduledTime = format.parseDateTime(sTime);
+                    DateTime eventTime = format.parseDateTime(eTime);
+                    Log.createNewLog(scheduledTime, eventTime, message,container, user, "Success");
+                }
             }
         }
         return redirect("/");
     }
 
-
-    public void printLogs(Long uID){
-        System.out.println("Printing Logs");
-
-        Users user = Users.find.where().eq("id", uID).findUnique();
-        System.out.println(user.Fname);
-        System.out.println(user.myLogs.size());
-
-        for (int i=0; i<10; i++) {
-            Log log = user.myLogs.get(i);
-            System.out.println(log.id);
-            System.out.println(log.scheduleTime);
-            System.out.println(log.loggedTime);
-            System.out.println(log.statusType);
-            System.out.println(log.message);
-            if (log.regards == null) {
-                System.out.println("Not linked");
-
-            }
-            else {
-//            System.out.println(log.regards.medication.name);
-            }
-        }
-//                Dispensor.find.where().eq("dispenser",dID).findUnique();
-
-
-    }
     /*
     sendEmail is a function that sends an email to the contacts of the users saved.
     The input parameters are the status type (errors or warnings), the user the device belongs to,

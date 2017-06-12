@@ -1,0 +1,91 @@
+html{
+    min-height:100%;
+}
+
+body{
+    position: relative;
+    padding-top:55px;
+    background: url("/assets/images/background.png") no-repeat left fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    background-size: cover;
+    max-width:100%;
+    z-height:-1;
+    padding-bottom: 6rem;
+
+}
+
+ol {
+    counter-reset: item;
+}
+
+ol > li {
+    counter-increment: item;
+}
+
+ol ol > li {
+    display: block;
+}
+
+ol ol > li:before {
+    content: counters(item, ".") ". ";
+    margin-left: -20px;
+}
+.image {
+    /*display: block;
+    margin: 0 auto;
+    width: 75%;*/
+}
+
+.indent{
+    text-indent: 50px;
+}
+
+.block{
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.img-responsive {
+    max-width: 90%;
+    max-height: auto;
+    margin: 0 auto;
+}
+
+.content {
+    max-width:75%;
+    margin: 0 auto;
+    background-color:#F7F7F7;
+
+}
+
+.text-container {
+    max-width:90%;
+    margin: 0 auto;
+    font-size: 110%;
+    background-color:#F7F7F7;
+
+}
+
+.citation {
+    margin: 0 auto;
+    font-size: 80%;
+    background-color:#F7F7F7;
+    padding-bottom:0.5em;
+    text-indent: -2em;
+    padding-left: 2em;
+
+}
+
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
+}

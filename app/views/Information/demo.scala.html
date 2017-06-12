@@ -1,0 +1,198 @@
+@(message:String)
+
+@main("Demo"){
+
+<div class="content">
+    <h1 align="center" style="padding-top:1em; padding-bottom:0.5em;">Demo</h1>
+    <hr>
+    <div class="text-container">
+        <p>The MERA Pill Dispenser is an interactive system that requires access to the prototype of the physical dispenser built by our team to interact with the website and view all of its components.</p>
+        <p>This demo is meant to briefly explain the components of the website and how the data exchange between the physical and web interface components of the MERA Pill Dispenser system works.</p>
+    </div>
+    <hr>
+
+    <h3 align="center"> Sign up for user account. </h3>
+    <div class="text-container">
+        <dl>
+            <dt>Dispenser ID</dt>
+            <dd class="block">The Dispenser ID in the signup form should match the ID of the physical dispenser. If the proper Dispenser ID is not provided, then the user will not be able to control their dispenser.</dd>
+        </dl>
+        <div class="image">
+            <img src="@routes.Assets.versioned("images/signup.png")" class="img-responsive">
+        </div>
+    </div>
+    <hr>
+
+    <h3 align="center"> Add contacts who will receive email notifications. </h3>
+    <div class="text-container">
+        <dl>
+            <dt>Contact Information</dt>
+            <dd class="block">Contacts will be sent notifications to their email in case of missed medication doses, low medication count in pill dispenser or technical difficulties but no notification will be sent when medication is dispensed successfully.</dd>
+        </dl>
+        <div class="image">
+            <img src="@routes.Assets.versioned("images/contact.png")" class="img-responsive">
+        </div>
+    </div>
+    <hr>
+
+    <h3 align="center">Detect available containers and notify website of available dispensers</h3>
+    <div class="text-container">
+        <dl>
+            <dt>Containers</dt>
+            <dd class="block">An HTTP post request will be made to the website upon detecting new containers where medication can be loaded.</dd>
+        </dl>
+        <div class="image">
+            <img src="@routes.Assets.versioned("images/postcontainers.png")" class="img-responsive">
+        </div>
+        <br>
+        <dl>
+            <dt>JSON Data</dt>
+            <dd class="block">After receiving and processing the data regarding these containers in JSON format, the website will store the information sent and make these containers available to this specific user.</dd>
+        </dl>
+        <div class="image">
+            <img src="@routes.Assets.versioned("images/containers.png")" class="img-responsive">
+        </div>
+    </div>
+    <hr>
+
+    <h3 align="center">Add medications to available containers and input medication information</h3>
+    <div class="text-container">
+        <dl>
+            <dt>Medication Information</dt>
+            <dd class="block">After loading medication into containers, the user must make note of the container ID where each medication was loaded and add the medication information into the corresponding container on the MERA website.</dd>
+            <hr>
+            <dt>Name</dt>
+            <dd class="block">Allows the user to know which medication is stored in each container.</dd>
+            <dt>Dose</dt>
+            <dd class="block">The quantity of pills to be dispensed at every dose. The pill dispenser is capable of counting the number of pills that will be dispensed.</dd>
+            <dt>Hours to next dose</dt>
+            <dd class="block">How often is the medication taken? <br>Pills will be dispensed as indicated at every 4 hours, 6 hours, 12 hours, etc.</dd>
+            <dt>First dose of the day</dt>
+            <dd class="block">The pill dispenser has its own operation times but there are medications that might only need to be taken at night.</dd>
+            <dt>Days Needed</dt>
+            <dd class="block">Some medications don't need to be taken every day.</dd>
+            <dt>Select Container</dt>
+            <dd class="block">User should verify medication instructions are being set for the container where they have loaded their medication.</dd>
+            <dt>Pill Count Loaded to Container</dt>
+            <dd class="block">The quantity of pills loaded to container allows the pill dispenser to notify contacts when pill count is running low. <br>We expect the medications to be loaded directly after being picked up at the pharmacy so the user only needs to read their medication packaging to determine pill quantity.</dd>
+        </dl>
+        <div class="image">
+            <img src="@routes.Assets.versioned("images/medicationinfo.png")" class="img-responsive">
+        </div>
+    </div>
+    <hr>
+
+    <h3 align="center">Retrieve medication instructions from MERA website</h3>
+    <div class="text-container">
+        <dl>
+            <dt>Retrieve medication instructions</dt>
+            <dd class="block">The pill dispenser will retrieve medication instructions in JSON format from the MERA website via an HTTP get request. The information retrieved will be stored away in the pill dispenser's database.</dd>
+        </dl>
+        <div class="image">
+            <img src="@routes.Assets.versioned("images/dispenserdata.png")" class="img-responsive">
+        </div>
+    </div>
+    <hr>
+
+    <h3 align="center">Determine medication schedule</h3>
+    <div class="text-container">
+        <dl>
+            <dt>Medication Schedule</dt>
+            <dd class="block">The pill dispenser uses a min heap structure to manage the times the various medications will be dispensed.</dd>
+            <hr>
+            <dt>Min Heap</dt>
+            <dd class="block">The top element of the heap will be the next to be dispensed based on time until its next dose. <br>Once medication is dispensed, the min heap, as per its structure properties, rearranges itself to keep the minimum element at top.</dd>
+            <dt>Container ID</dt>
+            <dd class="block">When it is time to dispense the medication, the medication dosage is retrieved based on the container ID.</dd>
+        </dl>
+        <div class="image">
+            <img src="@routes.Assets.versioned("images/minheap.png")" class="img-responsive">
+        </div>
+    </div>
+    <hr>
+
+    <h3 align="center">Upon schedule dispensing time, verify medication instructions from the MERA website.</h3>
+    <div class="text-container">
+        <dl>
+            <dt>Verifying dispensing information</dt>
+            <dd class="block">Before dispensing, the pill dispenser will verify that all information is accurate and no updates have been made by user on the MERA website.</dd>
+        </dl>
+        <div class="image">
+            <img src="@routes.Assets.versioned("images/updatetrue.png")" class="img-responsive">
+            <br>
+            <img src="@routes.Assets.versioned("images/updatefalse.png")" class="img-responsive">
+        </div>
+    </div>
+    <hr>
+
+    <h3 align="center">Dispense medication based on instructions.</h3>
+    <div class="text-container">
+        <dl>
+            <dt>Dispensing medication</dt>
+            <dd class="block">The pill dispensor counts pills using sensors which allows it dispense a single pill or multiple pills consecutively.</dd>
+        </dl>
+        <div style="text-align: center">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/HnefjHBUxis" frameborder="0" allowfullscreen></iframe>
+            <br>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/O5Iq6G-hdUw" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+    <hr>
+
+    <h3 align="center">Return event status</h3>
+    <div class="text-container">
+        <dl>
+            <dt>Event Status</dt>
+            <dd class="block">After scheduled medication dispensing time, an event log will be made and recorded as a "success", "error" or "warning".</dd>
+            <hr>
+            <span style="padding-left: 2em; display:block">
+                <dt>"Success": Succcessfully Dispensed Medication</dt>
+                <dd class="block">The pill dispenser dispensed medication on time and the user pressed the dispense button to retrieve medication.</dd>
+                <dt>"Warning": Missed Medication Dose</dt>
+                <dd class="block">The user did not take the medication dispensed.</dd>
+                <dt>"Error": Pill Dispenser (Raspberry Pi) Error</dt>
+                <dd class="block">The pill dispenser had a technical difficulty and medication was not dispensed successfully.</dd>
+            </span>
+        </dl>
+    </div>
+    <hr>
+
+    <h3 align="center">Report event log to MERA website</h3>
+    <div class="text-container">
+        <dl>
+            <dt>Post Log</dt>
+            <dd class="block">An event log will be sent by the pill dispenser via an HTTP post request to the MERA website informing of the event status of each schedule medication dose.</dd>
+        </dl>
+        <div class="image">
+            <img src="@routes.Assets.versioned("images/eventstatus.png")" class="img-responsive">
+        </div>
+    </div>
+    <hr>
+
+    <h3 align="center">Save event log and send notifications to contacts depending on event status</h3>
+    <div class="text-container">
+        <dl>
+            <dt>Save Event Log</dt>
+            <dd class="block">Event logs are received as HTTP Posts in JSON format and stored into the MERA website database.</dd>
+            <dt>Send Notifications</dt>
+            <dd class="block">In the case of "Warning" and "Error" logs, an email will automatically be sent to the contacts informing them of the event log.</dd>
+        </dl>
+        <div class="image">
+            <img src="@routes.Assets.versioned("images/email.png")" class="img-responsive">
+        </div>
+    </div>
+    <hr>
+
+    <h3 align="center">Display medication history</h3>
+    <div class="text-container">
+        <dl>
+            <dt>Medication History</dt>
+            <dd class="block">A medication history is built based on the event logs as reported by the pill dispenser and displayed on the MERA website.</dd>
+        </dl>
+        <div class="image">
+            <img src="@routes.Assets.versioned("images/medicationlogs.png")" class="img-responsive">
+        </div>
+    </div>
+    <hr>
+</div>
+}

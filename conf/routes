@@ -5,6 +5,7 @@
 # Home page
 GET     /                           controllers.Application.index()
 
+GET    /login                       controllers.Application.signin()
 POST    /login                      controllers.Application.login()
 POST    /signup                     controllers.Application.newUser()
 GET     /signup                     controllers.Application.signup()
@@ -26,11 +27,15 @@ GET     /cont/:id                   controllers.contacts.index(id:Long)
 POST    /cont/:id                   controllers.contacts.createCont(id:Long)
 POST    /cont/del/:id               controllers.contacts.removeCont(id:Long)
 
-#GET     /data/:id                       controllers.Requests.userData(id)
-GET     /dispenser                       controllers.Requests.dispenserData(id: Long?= 0)
+#GET     /data/:id                  controllers.Requests.userData(id)
+GET     /dispenser                  controllers.Requests.dispenserData(id: Long?= 0)
+
+GET     /demo                       controllers.Information.demo()
+GET     /project-information        controllers.Information.projectInformation()
 
 POST    /containers                 controllers.Requests.containerInfo()
 POST    /logs                       controllers.Requests.logActions()
+
 
 
 # Map static resources from the /public folder to the /assets URL path

@@ -1,6 +1,7 @@
 @(message:String)
 
 @main(""){
+
 <div class="container">
     <form action='@routes.contacts.createCont(Long.parseLong(session().get("user_id")))' class="form-horizontal" method="post">
         <div class="form-group">

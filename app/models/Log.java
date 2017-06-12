@@ -24,7 +24,7 @@ Log class saves the information for each log created.
     Finder:                 Function to find log by id
  */
 @Entity
-public class Log extends Model {
+public class Log extends Model{
     @Id
     public Long id;
 
@@ -42,57 +42,25 @@ public class Log extends Model {
     @ManyToOne
     public Users own;
 
-    public static Finder<Long, Log> find = new Finder<Long, Log>(Log.class);
-
+    public static Finder<Long,Log> find= new Finder<Long, Log>(Log.class);
     /*
     Function to display schedule time nicely
     The input parameter is the id of the log
         We find the log by id and format the scheduled time as a string
     We return the time as a string
      */
-    public String niceDate(Long id) {
+    public String niceDate(Long id){
         Log present = Log.find.byId(id);
         String time = present.scheduleTime.toString("hh:mm aa MM/dd/yyyy");
         return time;
     }
-
     /*
-       Function to create log
-       The input parameters are scheduled time, the time stamp (time event was logged), the message,
-       the container log corresponds to, the user log is about and the status type.
-           We create a new log and save the parameters before saving the log.
-       We return the log created.
-        */
-//    public static Log createNewLog(DateTime scheduleTime, DateTime timeStamp, String message, Containers container, Users user, String statusType) {
-//        System.out.println("\nscheduleTime");
-//        System.out.println(scheduleTime);
-//
-//        System.out.println("\ntimeStamp");
-//        System.out.println(timeStamp);
-//
-//        System.out.println("\nmessage");
-//        System.out.println(message);
-//
-//        System.out.println("\ncontainer");
-//        System.out.println(container);
-//
-//        System.out.println("\nuser");
-//        System.out.println(user);
-//
-//        System.out.println("\nstatusType");
-//        System.out.println(statusType);
-//
-//
-//        Log lg = new Log();
-//        lg.message = message;
-//        lg.own = user;
-//        lg.scheduleTime = scheduleTime;
-//        lg.loggedTime = timeStamp;
-//        lg.regards = container;
-//        lg.statusType = statusType;
-//        lg.save();
-//        return lg;
-//    }
+    Function to create log
+    The input parameters are scheduled time, the time stamp (time event was logged), the message,
+    the container log corresponds to, the user log is about and the status type.
+        We create a new log and save the parameters before saving the log.
+    We return the log created.
+     */
 
     public static Log createNewLog(DateTime scheduleTime, DateTime timeStamp, String message, Containers container, Users user, String statusType) {
         Log log = new Log();

@@ -19,8 +19,13 @@ import static play.data.Form.form;
 public class Application extends Controller {
     //Renders the index page, used by the GET route for the index page
     public Result index() {
-        return ok(index.render("MERA Dispenser"));
+        return ok(views.html.index.render(""));
     }
+
+    public Result signin() {
+        return ok(views.html.login.render(""));
+    }
+
     /*Login() function controlls the POST function for the user login it receives the username
     and password entered by the user in the login form. It finds the user by the username and
     calls authenticate(password) to check that the password is correct. It then stores session
@@ -92,10 +97,6 @@ public class Application extends Controller {
         session("user_id", newUser.id.toString());
         return redirect(routes.Users.index(newUser.id));
     }
-
-//    public void demo(){
-//        flash("success", "Welcome demo ");
-//    }
 
     //logout() is the function that controls the logout POST. it removes the session id and returns
     // the user to the index page

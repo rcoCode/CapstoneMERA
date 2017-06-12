@@ -1,0 +1,315 @@
+@(message:String)
+
+@main("Project Information"){
+<div class="content">
+    <h1 align="center" style="padding-top:1em; padding-bottom:0.5em;">Project Information</h1>
+    <hr>
+
+    <h3 align="center"> Section One. Purpose of MERA Pill Dispenser </h3>
+    <hr>
+    <div class="text-container">
+
+        <h4>1.1 Purpose of MERA Pill Dispenser</h4>
+        <p>It can be difficult after a doctor's appointment to keep track of a new or altered medication schedule. More often than not, people don't take their medication on time. The risk of taking medicine too early or to late may cause adverse consequences  as severe as overdosing or not treating medical conditions correctly. This behavior can result in serious health consequences both short term and long term. To ensure their safety, some patients rely on a caretaker to keep track of their medications but by doing this, the patient loses some autonomy. As an Internet of Things system, we want a product that allows patients to seamlessly integrate technology to assist them with their medication regime.</p>
+        <p>In a survey conducted by Langer Research Associates in 2013 over a sample of 1020 participants, the medical adherence of adults over 40 with chronic conditions is averaged at a score of 79(C+); 0 being non-adherent and 100 being completely adherent (Langer Research Associates, 3). By not adhering to medication regimes, most prescription drugs are wasted and could possibly endanger an individual's health.</p>
+        <div class="image">
+            <img src="@routes.Assets.versioned("images/adherence.png")" class="img-responsive">
+            <div class="citation">Source: “Medication Adherence in America” Langer Research Associates 2013
+                <a href="http://www.ncpanet.org/pdf/reportcard/AdherenceReportCard_Full.pdf">http://www.ncpanet.org/pdf/reportcard/AdherenceReportCard_Full.pdf</a>
+            </div>
+        </div>
+        <p style="padding-top:0.5em;">It was estimated by the NCPA (National Community Pharmacists Association) that 290 billion dollars of health care cost is added to the system annually due to non-adherence (3). This vast cost is used to cover the increase in number of hospitalizations, physician visits and nursing home admissions due to poor adherence.</p>
+        <p>The study also showed that more than half of the surveyed patients missed a dose of their medication in the last twelve months and about one-third simply didn't recall whether they took their medications or not. Long term, about a quarter of the patients reported not following up on prescription refills and 14% stopped taking their medication all together. These statistics suggest that many patients need a reliable method that keeps track of their medications and a reminder to follow up on their prescription refills.</p>
+        <p>The main purpose of the MERA Pill Dispenser is to simplify the way medication is taken. The goal of this product is to take advantage of technology to automatize medication regimes and lessen the burden on patients and their caretakers. Many individuals who are required to take multiple medications a day need a simple and efficient pill organizer and while many different pill organizer systems exist on the market, most are costly and still require a great amount of maintenance from the patient or caretaker. The MERA Pill Dispenser provides an alternative as a customizable pill organizing system that accommodates each patient's medication regime.</p>
+        <hr>
+
+        <h4>1.2 Overview of MERA Pill Dispenser</h4>
+        <p>The MERA Pill Dispenser is designed to minimize the effort needed to manage daily medications. While most similar products require planning ahead and loading predetermined doses into containers to be dispensed at a later time, the MERA Pill Dispenser eliminates this step by allowing the user to load different medications into separate containers so that doses can be managed by the MERA Pill Dispenser. This approach allows doses to be updated via the MERA website as soon as the doctor in increases/decreases dosage. The process of managing and setting up the MERA Pill Dispenser is centered around two main steps. Step one is to load medications into he appropriate containers and step two is to connect to the MERA Website to sign up for an account from which the physical Pill Dispenser will be controlled based on its identification number. These two steps will allow the pill dispenser system to manage the time when medications must be taken, track dosage of medications and keep track of medication history based on when pills were dispensed via web interface on the MERA website. </p>
+
+        <hr>
+
+        <h4>1.3 How to Use MERA Pill Dispenser</h4>
+        <p>The MERA Pill Dispenser is run by two components: a pill organizing container customizable to different shapes of pills and an online schedule organizer accessible via our website. Each pill organizing container is made to dispense a specific pill shape and the individual pill dispensing units are stackable to accommodate the number of pills the patient is taking. By accessing our MERA website, patients or caretakers can manage their medication information and track and view their medication activity.</p>
+        <p>At the time of a scheduled dose, an alarm will sound and with the press of a button the correct quantity of pills will dispense. This system will send out notifications if the patient missed taking their medication and reminders for when refill are needed. Once setup, the MERA Pill Dispenser will be completely autonomous unless changes are made to the schedule.</p>
+        <hr>
+
+        <h4>1.4 MERA Pill Dispenser Design</h4>
+        <div class="image">
+            <img src="@routes.Assets.versioned("images/design.png")" class="img-responsive">
+        </div>
+        <dl>
+            <dt>Main Unit</dt>
+            <dd class="block">This contains the Central System Unit which controls all the functions of the pill dispenser</dd>
+            <dt>Pill Retrieval</dt>
+            <dd class="block">Compartment that collects all pills from the individual dispensing units after dispensing</dd>
+            <dt>Dispense Button</dt>
+            <dd class="block">Pressing the button on the main unit prompts each dispensing unit to dispense the dose scheduled</dd>
+            <dt>Dispense Button</dt>
+            <dd class="block">Pressing the button on the main unit prompts each dispensing unit to dispense the dose scheduled</dd>
+            <dt>Individual Dispensing Units</dt>
+            <dd class="block">Storage compartment for each type of pill. Dispenses quantity of pills based on command from main unit</dd>
+            <dt>Pill Ramp</dt>
+            <dd class="block">Allows pills to exit from each individual dispensing unit</dd>
+            <dt>Pill Chute</dt>
+            <dd class="block">Common exit for all pills from individual dispensing units</dd>
+        </dl>
+    </div>
+    <hr>
+
+    <h3 align="center">Section Two. General Description</h3>
+    <hr>
+    <div class="text-container">
+        <h4>2.1 Product Perspective</h4>
+
+        <h4>Similar Products</h4>
+        <ul>
+            <li><b>Philips Medication Dispensing Service</b>
+                <div class="text-container">
+                <p>This medication dispenser relies on a vocal dispensing unit that is
+                    connected to a phone line. It follows a calendar template to pre-distribute medicine in separate cups that load into the dispenser. At time of medication, it will vocally inform the patient to take their pills. It will continue the alarm for 90 minutes until patient takes medication. Once a missed regiment is detected, the medication will be sent to a different compartment to avoid overdosing and alert the caretaker of the patient’s situation via phone. This dispensing service also detects low medication supply and informs the caretaker three days before the medication runs out. There is also an additional backup battery that allows dispenser to operates 18 hours without power and alerts the caretaker. This dispenser can load up to 60 cups (60 dosages).</p>
+                <p><b>Cost:</b> Monthly subscription of $49.00 minimum plus the cost of the dispenser (unknown)</p>
+                <p>Source: <a href="http://www.managemypills.com/content/">http://www.managemypills.com/content/</a></p>
+                </div>
+            </li>
+            <li><b>Automatic Pill Dispenser by e-Pill</b>
+            <div class="text-container">
+                <p>This dispenser is tamper proof with alarm and text message service that alerts the patients. It can store a week’s worth of medication dosages with up to four doses a day. It has locks that prevent medication doses being taken prematurely ahead of schedule. Loud alarms will sound if medication is removed from the dispenser. The dispenser has a reloadable tray that can store each dosage.</p>
+                <p><b>Cost:</b> $844.95 via Amazon.com</p>
+                <p>Source: <a href="http://www.amazon.com/dp/B001LNYFDS?psc=1">http://www.amazon.com/dp/B001LNYFDS?psc=1</a></p>
+            </div>
+            </li>
+        </ul>
+
+        <p><b>Difference</b></p>
+        <p>The main difference between our proposed project and similar pill dispensing products is that our product further simplifies the process of setting up the system. Most products require the user (individual/caretaker) to load the pills into the machine as individual doses. This design of loading the device prior to use is time consuming and the user of the product might even make some errors at the time of loading doses. Our product allows user to simply load the medication in compartments and our system then organizes pill doses into all sort of combinations depending on the individual's medication schedule.</p>
+        <p>Each pill dispenser has an account on the MERA website associated with it which gives the user or caretaker access to the logs of the times when the patient retrieved their medication and post alerts for any missed medication doses. This encourages patients and caretakers to closely monitor their medication adherence.</p>
+        <p>Changes in medication instructions can easily be made without having to reorganize individual containers of doses as with other products because changes in medication instructions are made directly on the MERA website. The physical pill dispenser only needs to be restocked when it has run out of medication and alerts of low medication count will made days prior to this.</p>
+        <hr>
+
+        <h4>2.2 User Characteristics</h4>
+        <p>The MERA Pill Dispenser is intended for individuals who have complex medical regimens which require them to take multiple pills on a regular basis. This system is ideal for individuals who have several prescriptions to manage or for medical aids (eg. home attendants, relatives, etc) to ensure that a patient takes their medications accurately and consistently. The MERA Pill Dispenser is designed to be easy to operate with users only needing to to place medication into the appropriate container and all basic prescription information to be entered on the website. The main responsibility of the user is to have basic internet skills in order to operate the website based aspects of the device.</p>
+        <hr>
+
+        <h4>2.3 Product Functions</h4>
+        <h4>Core Functionalities</h4>
+        <ul>
+            <li>User Interface to input schedule
+                <ul><li>User will either be the patient or the primary caretaker that manages the medication regime. The user will input their medication schedule through the MERA website with their individual login and password matched to their dispenser ID. They medication information they need to provide will include dosage and frequency for each medication and this information will prompt alarms that mobilize the dispense unit. User will view a log of their medication history through the website.</li></ul>
+            </li>
+            <li>Dispensing pills based on schedule
+                <ul><li>The device will automatically dispense medication based on the user’s schedule on the website. At time of a medication dose, an audible alarm will remind the user to take medication. Once the dispensing button is pressed, the appropriate dose of medication will be accurately dispensed.</li></ul>
+            </li>
+            <li>Reminder and Alert System
+                <ul>
+                    <li>There are two unique tones that alert of time of medication dose vs a missed dosage alert.</li>
+                    <li>At time of medication, the first audible alarm will notify the patient to take the medication and once the pill is retrieved, a history log will be recorded on the website interface and the alarm will stop. This first alarm will keep playing for a set amount of time before stopping.</li>
+                    <li>If medication is not retrieved, a second tone will sound once to indicate that dose will be recorded as missed and an email notification will be sent.</li>
+                    <li>Each dispensing unit will detect if a given pill’s supply is low and send out a reminder to user to refill the dispenser via email to refill container with medication.</li>
+                </ul>
+            </li>
+            <li>Dosage Overlap Prevention
+                <ul><li>MERA Pill Dispenser will only dispense pills within in a safe margin of
+                    scheduled time around the scheduled time of medication and after the user has pressed the dispensing button. This is to prevent overlapping of dosages in the event of missed medication, only one dosage will be dispensed.</li></ul>
+            </li>
+            <li>Easily Scalable
+                <ul><li>Addition pill compartments can be attached to the main unit in order to
+                    accommodate a different number of medications. A maximum total of 12 compartments can be integrated into one main dispensing unit.</li></ul>
+            </li>
+        </ul>
+        <hr>
+        <h4>Possible Futute Features</h4>
+        <ul>
+            <li>Implement local interface on the dispenser</li>
+            <li>Linked alert system to phone apps</li>
+            <li>Text alert will be sent out to caretaker if certain number of consecutive doses have been missed.</li>
+            <li>Provide an override code so that user can take out desired amount of doses ahead of schedule</li>
+            <li>Allow two interfaces to incorporate patient and caretaker</li>
+        </ul>
+
+        <hr>
+
+        <h4>2.4 Assumptions and Dependencies</h4>
+        <p>MERA Pill Dispenser is not designed as a portable pill dispensing system but as a device for at home use. It must be plugged into a power outlet at all times in order to operate. The device cannot account for when the user is not at home or outside the hearing range of the alarm. Internet access is required for this device to function properly and users need to have basic internet skills. A caretaker may need to take responsibility of the website to run functionalities if the user is incapable of doing so. Each dispensing unit is limited to accomodate a specific pill shape and a small range of pill sizes which the container can accurately dispense. The MERA Pill Dispenser cannot be adjusted to allow for more than twelve different types of pills to be dispensed.</p>
+    </div>
+    <hr>
+
+    <h3 align="center">Section Three. Specific Requirements</h3>
+    <hr>
+    <div class="text-container">
+        <h4>3.1 Functionality Requirements</h4>
+        <h4>Main Unit</h4>
+        <ul>
+            <li>Able to keep track of up to twelve individual dispensing units</li>
+            <li>Synchronize with medication schedule on web page interface</li>
+            <li>Keep a record of medication activity</li>
+            <li>Sound alarms to remind user to take medicines</li>
+            <li>Different alarm tones are used for scheduled vs. missed medications alerts</li>
+            <li>Notifications need to be sent to the server and user (via email) on missed medication events</li>
+            <li>A dispensing button needs to be pressed to signal the start of dispensing</li>
+            <li>A mechanism to prevent pill distribution outside of scheduled dispensing time is established by setting a time limit during which medication can be taken</li>
+            <li>To be to dispense pill on schedule time even if internet connection is unavailable, the pill dispenser keeps its own local database of medication instructions</li>
+        </ul>
+        <h4>Dispensing Unit</h4>
+        <ul>
+            <li>Dispensing correct number of pills base on schedule</li>
+            <li>Detect if pills are low in each unit</li>
+            <li>Count how many pills have been dispensed</li>
+            <li>Stack and log events along with other dispensing units and report this to the main system</li>
+        </ul>
+        <h4>Web Page Interface</h4>
+        <ul>
+            <li>Access to individual profiles for each pill dispenser associated with user accounts </li>
+            <li>Manage individual medication schedule</li>
+            <li>Displaying user medication activity</li>
+            <li>Notification system</li>
+        </ul>
+
+        <hr>
+
+        <h4>3.2 Hardware Requirements</h4>
+        <h4>Main Unit</h4>
+        <p>The main unit is the “brain” of MERA Pill Dispenser thus a microprocessor is needed. It needs to connect to internet in order to access the schedule on the MERA website. Up to twelve dispensing units should be able to connect to the main unit using a physical port connection. A real time clock is necessary to monitor the medication schedule when the system is off. It is also necessary to have enough local storage memory to store a full calendar, medication activity logs and system logs. A button will signal to each dispensing unit when to start dispensing pills. Once all medications are dispensed successfully, they will be collected in the pill retrieval compartment.</p>
+        <h4>Dispensing Unit</h4>
+        <p>Up to twelve dispensing units should be able to connect to the main unit with cables. There must be a storage compartment that can safely hold pills and be able to open manually to refill pills. The dispensing unit must be disconnected from the main unit before the user can gain access to the storage compartment to allow the software to detect and notify users that the pill count in a container may have been altered. A motor or some other mechanisms will be used to accurately dispense any number of pills from the storage compartment, with a minimum of one pill. The dispenser unit will need to incorporate a sensor to detect number of pills dispensed. Each unit should be stackable and lock on top of each other interchangeably so that ultimately all of these rest on top of the Main Unit as per the diagram in section 1.4. Once pills are distributed, they will follow the pill ramp which is a part of this unit’s exterior and connect seamlessly with the stacked units above and below so all pills will travel through the pill chute and collect at the pill retrieval area.</p>
+        <hr>
+
+        <h4>3.3 Software Requirements</h4>
+        <h4>Main Unit</h4>
+        <p>The main unit should be able to communicate with and control all connected dispensing units. The main unit will keep track of all scheduled medication and signal all dispensing units when the time window to dispense for a specific unit is opened. The time window to dispense should be a range of time during which it is deemed safe to take the pill, this includes time before and after the initial alarm. This unit must also be able to communicate with the MERA website. When a change is made to the medication schedules, the main unit must prioritize in updating with the information received from the server. All events that occur with the main unit and the dispensing unit, either due to software, hardware, and/or user interaction, must be recorded and logged with timestamps. For example, the current status of all connected dispensing units must be updated when a change occurs. The main unit should be able to send this data to the MERA server when requested. This data should also be periodically archived to the server starting from the one furthest back in time.</p>
+        <p>In case of internet outage, some vital functionalities of the product must continue to function. The main unit should be able to use the most recent copy of the medication schedules to ensure that these medications will be dispensed on schedule.</p>
+        <h4>Dispensing Unit</h4>
+        <p>Individual dispensing units should process the data from main unit to dispense the correct number of pills from each unit. Only after the dispense button is pressed, the routine for pill dispensing is allowed to commence. A sensor reading the number of pills that pass through the pill ramp allows to accurately dispense the specified number of pills. Once the dispensing unit is done distributing pills, it must send a 'success' signal to the main unit and prevent any further request for dispensing to go through until a new signal to dispense is sent by the main unit.</p>
+        <h4>Web Page</h4>
+        <p>Each MERA Pill Dispenser will be linked with a user account that lets users create a profile to be used for all MERA Pill Dispenser functionalities. A medication schedule will be set up using a calendar system based on frequency of pill regime. Through their user account, the user will have the ability to add, change, remove medications and this will alter medication schedule automatically. User will also be able to view their medication history logs and manage individual pills in each dispensing unit. The information about each dispensing unit will be stored in a min heap data structure that contains an ID number of the unit, the name of the medication in the unit, the frequency the medication should be taken, instructions for the medication, and the current status of pills in the dispensing unit. The web page will display notifications if medication was not taken, if medication is running low or empty, or if some other anomalies are detected. Notifications pertaining to missed medications and low medication will also be sent via email to the user directly.</p>
+    </div>
+    <hr>
+
+    <h3 align="center">Section 4. References</h3>
+    <hr>
+    <div class="text-container">
+        <div class="citation">
+            Rachel S. Smith.“Writing a Requirements Document”. CSU Center for Distributed Learning. Web. 11 September 2015.
+            <<a href="http://www.cdl.edu/uploads/Yf/tc/YftchVf1me0lxMBeQDjsHA/reqdoctemplate.doc"> http://www.cdl.edu/uploads/Yf/tc/YftchVf1me0lxMBeQDjsHA/reqdoctemplate.doc</a>>
+        </div>
+
+        <div class="citation">
+            Reuben Wright, Manuel Casado, Corentin Guillo. “HMA-FO Feasibility Analysis Service System Requirements Document”. DEIMOS Space. 26 January 2010. Web. 11 September 2015.
+            <<a href="https://wiki.services.eoportal.org/tiki- download_wiki_attachment.php?attId=634">https://wiki.services.eoportal.org/tiki- download_wiki_attachment.php?attId=634</a>>
+        </div>
+
+        <div class="citation">
+            Jean-Claude Franchitti. “System Requirement Specifications (SRS)”. New York University: Computer Science Department Courant Institute of Mathematical Sciences. 6 May 2015. Web. 11 September 2015.
+            <<a href="http://www.nyu.edu/classes/jcf/CSCI-GA.2440- 001/handouts/Assignment1SampleSolution.pdf">http://www.nyu.edu/classes/jcf/CSCI-GA.2440- 001/handouts/Assignment1SampleSolution.pdf</a>>
+        </div>
+
+        <div class="citation">
+            “Philips Medication Dispensing Service”. Philips North America Corporation. Web. 13 September 2015.
+            <<a href="http://www.managemypills.com/content/">http://www.managemypills.com/content/</a>>
+        </div>
+
+        <div class="citation">
+            “National Report Card on Medication Adherence”. National Community Pharmacists Association: Langer Research Associates. 10 March 2013. Web. 15 September 2015.
+            <<a href="http://www.ncpanet.org/pdf/reportcard/AdherenceReportCard_Full.pdf">http://www.ncpanet.org/pdf/reportcard/AdherenceReportCard_Full.pdf</a>>
+        </div>
+
+        <div class="citation">
+            “Improving Prescription Medicine Adherence is Key to Better Health Care”. Phrma. January 2011. Web. 15 September 2015.
+            <<a href="http://phrma.org/sites/default/files/pdf/PhRMA_Improving%20Medication%20 Adherence_Issue%20Brief.pdf">http://phrma.org/sites/default/files/pdf/PhRMA_Improving%20Medication%20 Adherence_Issue%20Brief.pdf</a>>
+        </div>
+
+        <div class="citation">
+            Pamela Anderson. “Medication Errors: Don’t Let Them Happen to You”. American Nurse Today. Volume 5, Number 3. March 2010. Web. 15 September 2015.
+            <<a href="http://www.americannursetoday.com/assets/0/434/436/440/6276/6334/6350/635 6/8b8dac76-6061-4521-8b43-d0928ef8de07.pdf">http://www.americannursetoday.com/assets/0/434/436/440/6276/6334/6350/635 6/8b8dac76-6061-4521-8b43-d0928ef8de07.pdf</a>>
+        </div>
+
+        <div class="citation">
+            “BossPak Tabletop Counter, Tablet Counter”. CapPlus Technologies. November 2012. Web. 15 September 2015.
+            <<a href="https://www.youtube.com/watch?v=mt1COxJDJnI">https://www.youtube.com/watch?v=mt1COxJDJnI</a>>
+        </div>
+
+        <div class="citation">
+            “Automatic Counting and Bottles Line, Capsule Counting Machine, Tablet and Pills Filling Line”. Youtube. 7 January 2014. Web. 15 September 2015.
+            <<a href="https://youtu.be/be3ugunC0H4?t=1m40s">https://youtu.be/be3ugunC0H4?t=1m40s</a>>
+        </div>
+
+        <div class="citation">
+            “Electronic Tablet Counter: RX 4 Capsule Counter Machine by RX Count”. Youtube. 21 June 2015. Web. 15 September 2015.
+            <<a href="https://www.youtube.com/watch?v=mO_NhPjw8f0">https://www.youtube.com/watch?v=mO_NhPjw8f0</a>>
+        </div>
+
+        <div class="citation">
+            “Capsule Counting Machine Single Vibrator Plate Tablet Counter”. Youtube. 25 August 2014. Web. 15 September 2015.
+            <<a href="https://youtu.be/sN10x65oSXo?t=37s">https://youtu.be/sN10x65oSXo?t=37s</a>>
+        </div>
+
+        <div class="citation">
+            “EYECON Pill Counter”. Youtube. 17 September 2010. Web. 15 September 2015.
+            <<a href="https://www.youtube.com/watch?v=wlBhw-zUXHY">https://www.youtube.com/watch?v=wlBhw-zUXHY</a>>
+        </div>
+
+        <div class="citation">
+            “Kirby Lester KL1 Tablet Counter Video”. Youtube. 8 January 2012. Web. 15 September 2015.
+            <<a href="https://www.youtube.com/watch?v=lMfZzNHIMdk">https://www.youtube.com/watch?v=lMfZzNHIMdk</a>>
+        </div>
+
+        <div class="citation">
+            “KL1 Cleaning”. Youtube. 23 January 2014. Web. 15 September 2015.<
+            <a href="https://www.youtube.com/watch?v=ABQ6WW1nyW4">https://www.youtube.com/watch?v=ABQ6WW1nyW4</a>>
+        </div>
+
+        <div class="citation">
+            “Object Counter”. Youtube. 3 May 2012. Web. 15 September 2015.
+            <<a href="https://www.youtube.com/watch?v=l3fMJaAa6fs">https://www.youtube.com/watch?v=l3fMJaAa6fs</a>>
+        </div>
+
+        <div class="citation">
+            “Introducing The Philips Medication Dispensing Service”. Youtube. 6 January 2012.. Web. 15 September 2015.
+            <<a href="https://www.youtube.com/watch?v=HOeamcwDFbg">https://www.youtube.com/watch?v=HOeamcwDFbg</a>>
+        </div>
+
+        <div class="citation">
+            “Automated Medication Dispenser”. Youtube. 4 April 2013. Web. 15 September 2015.<
+            <a href="https://www.youtube.com/watch?v=hZefq7I1C6E">https://www.youtube.com/watch?v=hZefq7I1C6E</a>>
+        </div>
+
+        <div class="citation">
+            “Smart Pill Dispenser - USF Capstone Design Project”. Youtube. 15 April 2013. Web. 15 September 2015.
+            <<a href="https://www.youtube.com/watch?v=EpiFwMFoTYc">https://www.youtube.com/watch?v=EpiFwMFoTYc</a>>
+        </div>
+
+        <div class="citation">
+            “How to make a digital object counter using, infrared sensor, CD4026 and seven segment display”. Build Circuit Australia. 8 May 2012. Web. 17 September 2015.
+            <<a href="http://www.buildcircuit.com/object-counter/">http://www.buildcircuit.com/object-counter/</a>>
+        </div>
+
+        <div class="citation">
+            “Small Reduction Stepper Motor - 5VDC 32-Step 1/16 Gearing”. AdaFruit. Web. 17 September 2015.
+            <<a href="https://www.adafruit.com/products/858">https://www.adafruit.com/products/858</a>>
+        </div>
+
+        <div class="citation">
+            “Stepper Motor Quickstart Guide”. 3 January 2013. Web. 17 September 2015.
+            <<a href="https://www.sparkfun.com/tutorials/400">https://www.sparkfun.com/tutorials/400</a>>
+        </div>
+
+        <div class="citation">
+            “GMS Med-e-lert 28 Day Automatic Pill Dispenser 6 Alarms with 6 Dosage Rings and 1 Metal Key - Solid White Lid”. Med-e-lert. 16 September 2015.
+            <<a href="http://www.amazon.com/Med-e-lert-Automatic-Dispenser-Alarms- Dosage/dp/B002B51358/ref=sr_1_2?ie=UTF8&qid=1442430192&sr=8- 2&keywords=medready+pill+dispenser">http://www.amazon.com/Med-e-lert-Automatic-Dispenser-Alarms- Dosage/dp/B002B51358/ref=sr_1_2?ie=UTF8&qid=1442430192&sr=8- 2&keywords=medready+pill+dispenser</a>>
+        </div>
+        <div class="citation">
+            “Ivation Automatic Pill Dispenser, Electronic Medication Reminder with new Lock, Louder Alarm and Flashing Light”. Ivation. Web. 16 September 2015.
+            <<a href="http://www.amazon.com/Ivation-Automatic-Dispenser-Electronic- Medication/dp/B00FL620B0/ref=pd_sim_364_3?ie=UTF8&refRID=14WQ42B7 FQVFW3100X6W">http://www.amazon.com/Ivation-Automatic-Dispenser-Electronic- Medication/dp/B00FL620B0/ref=pd_sim_364_3?ie=UTF8&refRID=14WQ42B7 FQVFW3100X6W</a>>
+        </div>
+
+        <div class="citation">
+            “Automatic Pill Dispenser Tamper Proof, Long Alarm and Text Message. Locked Pill Dispenser”. e-pill Medication Reminders. Web. 16 September 2015.
+            <<a href="http://www.amazon.com/dp/B001LNYFDS?psc=1">http://www.amazon.com/dp/B001LNYFDS?psc=1</a>>
+        </div>
+
+    </div>
+    <hr>
+
+</div>
+
+
+}
